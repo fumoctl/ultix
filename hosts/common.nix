@@ -334,12 +334,14 @@
     CLUTTER_BACKEND = "wayland";
   };
 
-  services.displayManager.ly = {
-    enable = lib.mkDefault true;
-    settings = {
-      # Hyprland session is picked up from wayland-sessions automatically.
-      numlock = 1;
-    };
+  services.displayManager.sddm = {
+    enable = true;
+    theme = "catppuccin-mocha-blue";
+    extraPackages = with pkgs; [
+      kdePackages.qt5compat
+      kdePackages.qtsvg
+      kdePackages.qtmultimedia
+    ];
   };
 
   # --- Hardware & Input Integrations ---
@@ -547,6 +549,10 @@
     wireplumber
     libnotify
     bibata-cursors
+    (catppuccin-sddm.override {
+      flavor = "mocha";
+      accent = "blue";
+    })
 
     # Gaming & Performance
     lact
