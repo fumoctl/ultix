@@ -49,6 +49,9 @@ in
                 hl.exec_cmd("noctalia")
                 hl.exec_cmd("systemctl --user import-environment PATH WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
                 hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
+                -- Autostart apps
+                hl.exec_cmd("equibop -m")
+                hl.exec_cmd("steam -silent")
               end
             '')
           ];
@@ -243,11 +246,17 @@ in
           ];
         }
 
-        # Screenshots
+        # Screenshots via Noctalia IPC
         {
           _args = [
             (mkLuaInline ''mainMod .. " + SHIFT + S"'')
-            (mkLuaInline ''hl.dsp.exec_cmd("grim -g \"$(slurp)\" - | wl-copy")'')
+            (mkLuaInline ''hl.dsp.exec_cmd("noctalia msg screenshot-fullscreen")'')
+          ];
+        }
+        {
+          _args = [
+            (mkLuaInline ''mainMod .. " + SHIFT + CTRL + S"'')
+            (mkLuaInline ''hl.dsp.exec_cmd("noctalia msg screenshot-region")'')
           ];
         }
 

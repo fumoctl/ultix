@@ -141,7 +141,8 @@ Noctalia is integrated directly into the Hyprland session via Noctalia's native 
 | <kbd>Alt</kbd> + <kbd>Tab</kbd> | Window Switcher | `noctalia msg window-switcher` |
 | <kbd>Super</kbd> + <kbd>Return</kbd> | Open Terminal (Ptyxis) | `ptyxis` |
 | <kbd>Super</kbd> + <kbd>Q</kbd> | Close Active Window | `hyprctl dispatch killactive` |
-| <kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd> | Area Screenshot to Clipboard | `grim -g "$(slurp)" - \| wl-copy` |
+| <kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd> | Fullscreen Screenshot (focused monitor) | `noctalia msg screenshot-fullscreen` |
+| <kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>Ctrl</kbd> + <kbd>S</kbd> | Region Screenshot | `noctalia msg screenshot-region` |
 | <kbd>Volume Up / Down / Mute</kbd> | Noctalia Volume OSD | `noctalia msg volume-up / down / mute` |
 | <kbd>Brightness Up / Down</kbd> | Noctalia Brightness OSD | `noctalia msg brightness-up / down` |
 

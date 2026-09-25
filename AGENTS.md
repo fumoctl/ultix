@@ -38,6 +38,11 @@
 - HM noctalia module validates config at build time (`noctalia config validate`) — build failure = invalid TOML settings.
 - In impermanence: `.config/dconf`, `.config/noctalia`, `.local/state/noctalia` are persisted (noctalia settings.toml overrides live in state dir).
 
+## xdg-desktop-portal (Hyprland + gtk backend)
+- `xdg.portal.config` per-DE sections (`hyprland`) REPLACE `common` for ALL interfaces when XDG_CURRENT_DESKTOP matches. The hyprland backend only implements Screenshot/ScreenCast/GlobalShortcuts.
+- If `gtk` is dropped from `hyprland.default`, `org.freedesktop.portal.Settings` vanishes from the portal broker and libadwaita apps (Ptyxis etc.) silently fall back to light mode — adw's portal backend gets no color-scheme; its gsettings fallback is only used when the portal backend is unavailable, not when the portal returns nothing. Keep `default = [ "hyprland" "gtk" ]` in both `common` and `hyprland`.
+- Verify: `busctl --user call org.freedesktop.portal.Desktop /org/freedesktop/portal/desktop org.freedesktop.portal.Settings ReadOne ss org.freedesktop.appearance color-scheme` → `<u 1>` = prefer-dark.
+
 ## Greeter
 - Replaced greetd/tuigreet with ly: `services.displayManager.ly = { enable = ...; settings = { ... }; }` in hosts/common.nix (module is services.displayManager.ly, NOT services.ly).
 - Ly picks up Hyprland from wayland-sessions automatically (programs.hyprland provides it); no explicit session cmd needed. Options live under settings (config.ini atoms), e.g. numlock = 1.

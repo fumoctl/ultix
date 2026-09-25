@@ -310,8 +310,13 @@
       common = {
         default = [ "hyprland" "gtk" ];
       };
+      # NOTE: this per-DE section overrides `common` for ALL interfaces when
+      # XDG_CURRENT_DESKTOP=Hyprland. The hyprland backend only implements
+      # Screenshot/ScreenCast/GlobalShortcuts, so "gtk" must stay in the list
+      # or org.freedesktop.portal.Settings disappears from the portal broker
+      # and libadwaita apps (Ptyxis etc.) always see light mode.
       hyprland = {
-        default = [ "hyprland" ];
+        default = [ "hyprland" "gtk" ];
       };
     };
   };
