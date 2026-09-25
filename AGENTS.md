@@ -38,11 +38,6 @@
 - HM noctalia module validates config at build time (`noctalia config validate`) — build failure = invalid TOML settings.
 - In impermanence: `.config/dconf`, `.config/noctalia`, `.local/state/noctalia` are persisted (noctalia settings.toml overrides live in state dir).
 
-## xdg-desktop-portal (Hyprland + gtk backend)
-- `xdg.portal.config` per-DE sections (`hyprland`) REPLACE `common` for ALL interfaces when XDG_CURRENT_DESKTOP matches. The hyprland backend only implements Screenshot/ScreenCast/GlobalShortcuts.
-- If `gtk` is dropped from `hyprland.default`, `org.freedesktop.portal.Settings` vanishes from the portal broker and libadwaita apps (Ptyxis etc.) silently fall back to light mode — adw's portal backend gets no color-scheme; its gsettings fallback is only used when the portal backend is unavailable, not when the portal returns nothing. Keep `default = [ "hyprland" "gtk" ]` in both `common` and `hyprland`.
-- Verify: `busctl --user call org.freedesktop.portal.Desktop /org/freedesktop/portal/desktop org.freedesktop.portal.Settings ReadOne ss org.freedesktop.appearance color-scheme` → `<u 1>` = prefer-dark.
-
 ## Greeter
 - Replaced greetd/tuigreet with ly: `services.displayManager.ly = { enable = ...; settings = { ... }; }` in hosts/common.nix (module is services.displayManager.ly, NOT services.ly).
 - Ly picks up Hyprland from wayland-sessions automatically (programs.hyprland provides it); no explicit session cmd needed. Options live under settings (config.ini atoms), e.g. numlock = 1.
@@ -52,11 +47,6 @@
 - Belt-and-suspenders: explicit `env = [ { _args = [ "KEY" "VAL" ]; } ]` entries in hyprland.nix `settings` (XCURSOR_*/HYPRCURSOR_*) so the Hyprland session gets them even if ly doesn't source hm-session-vars.sh.
 - nixpkgs `bibata-cursors` ships XCursor themes only (`share/icons/Bibata-*`); hyprcursor transparently falls back to XCursor themes — no separate hyprcursor package needed.
 - GTK dconf cursor keys (cursor-theme/cursor-size under org/gnome/desktop/interface) are set by `home.pointerCursor`'s gtk backend, not by hand.
-
-## Ptyxis / system GTK theme
-- Ptyxis has its OWN `interface-style` GSettings key (default `'dark'` = forced dark, ignores system color-scheme). Values: `system`/`light`/`dark`.
-- To make Ptyxis follow the system theme: `dconf.settings."org/gnome/Ptyxis".interface-style = "system"` (in home/shell.nix) — it then follows `org.gnome.desktop.interface color-scheme`, which Noctalia's gtk3/gtk4 apply hook syncs on light/dark toggle (also via xdg-desktop-portal-gtk settings backend).
-- `org/gnome/desktop/interface/color-scheme = "prefer-dark"` is defaulted in home/noctalia.nix so libadwaita apps start dark before Noctalia's hook first writes the key. dconf is persisted in impermanence; HM's dconf module only sets keys not already present in the user db, so live values win.
 
 ## Validation workflows (home-manager)
 - Full HM config check: `nix build --no-link '.#nixosConfigurations.<host>.config.home-manager.users.fumoctl.home.activationPackage'` (camelCase `activationPackage`).

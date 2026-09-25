@@ -31,12 +31,6 @@
     iconTheme.name = "breeze";
   };
 
-  # Default libadwaita/GNOME color-scheme to prefer-dark so apps like Ptyxis
-  # (with interface-style = "system") start dark before Noctalia's GTK hook
-  # first syncs org.gnome.desktop.interface. dconf is persisted in
-  # impermanence, so this only applies when the key isn't already set.
-  dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
-
   qt = {
     enable = true;
     platformTheme.name = "kde"; # Uses native KDE theming/KColorScheme
@@ -73,5 +67,13 @@
         ];
       };
     };
+  };
+
+  home.file = {
+  # Target path (relative to home directory)
+  ".config/noctalia/noctconf.toml" = {
+    source = ../dotfiles/noctconf.toml;  # Path to file
+    recursive = true;       # If source is a directory
+  };
   };
 }
