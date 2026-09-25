@@ -47,7 +47,6 @@
       ".config/BraveSoftware"
       ".config/MangoHud"
       ".config/dconf"
-      ".config/gthumb"
       ".config/lollypop"
       ".config/nautilus"
       ".local/share/lollypop"

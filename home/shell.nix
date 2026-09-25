@@ -8,6 +8,7 @@
 {
   home.packages = with pkgs; [
     ptyxis
+    resources
     fastfetch
     btop
     eza
@@ -134,25 +135,11 @@
     '';
   };
 
-  # Terminal Emulator (Ptyxis) settings & desktop launcher
+  # Terminal Emulator (Ptyxis) settings
   dconf.settings = {
     "org/gnome/Ptyxis" = {
       restore-session = false;
     };
-  };
-
-  xdg.desktopEntries."org.gnome.Ptyxis" = {
-    name = "Ptyxis";
-    genericName = "Terminal";
-    comment = "Container-oriented terminal emulator";
-    exec = "ptyxis --new-window %U";
-    icon = "org.gnome.Ptyxis";
-    terminal = false;
-    categories = [
-      "System"
-      "TerminalEmulator"
-    ];
-    startupNotify = true;
   };
 
   # XDG MIME associations
@@ -211,17 +198,17 @@
 
       "inode/directory" = "org.gnome.Nautilus.desktop";
 
-      # Photos & Images (gThumb)
-      "image/jpeg" = "org.gnome.gThumb.desktop";
-      "image/png" = "org.gnome.gThumb.desktop";
-      "image/gif" = "org.gnome.gThumb.desktop";
-      "image/webp" = "org.gnome.gThumb.desktop";
-      "image/svg+xml" = "org.gnome.gThumb.desktop";
-      "image/bmp" = "org.gnome.gThumb.desktop";
-      "image/tiff" = "org.gnome.gThumb.desktop";
-      "image/avif" = "org.gnome.gThumb.desktop";
-      "image/heic" = "org.gnome.gThumb.desktop";
-      "image/x-icon" = "org.gnome.gThumb.desktop";
+      # Photos & Images (Gwenview)
+      "image/jpeg" = "org.kde.gwenview.desktop";
+      "image/png" = "org.kde.gwenview.desktop";
+      "image/gif" = "org.kde.gwenview.desktop";
+      "image/webp" = "org.kde.gwenview.desktop";
+      "image/svg+xml" = "org.kde.gwenview.desktop";
+      "image/bmp" = "org.kde.gwenview.desktop";
+      "image/tiff" = "org.kde.gwenview.desktop";
+      "image/avif" = "org.kde.gwenview.desktop";
+      "image/heic" = "org.kde.gwenview.desktop";
+      "image/x-icon" = "org.kde.gwenview.desktop";
 
       # Music & Audio
       "audio/mpeg" = "org.gnome.Lollypop.desktop";

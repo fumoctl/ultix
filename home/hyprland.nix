@@ -23,8 +23,9 @@ in
     settings = {
       # Lua locals, usable inside mkLuaInline expressions below
       mainMod = { _var = "SUPER"; };
-      terminal = { _var = "ptyxis"; };
-      fileManager = { _var = "nautilus"; };
+      terminal = { _var = "ptyxis --new-window"; };
+      fileManager = { _var = "nautilus --new-window"; };
+      browser = { _var = "brave --new-window"; };
 
       # Autostart Noctalia desktop shell & export session environment
       on = [
@@ -153,6 +154,12 @@ in
           _args = [
             (mkLuaInline ''mainMod .. " + E"'')
             (mkLuaInline "hl.dsp.exec_cmd(fileManager)")
+          ];
+        }
+        {
+          _args = [
+            (mkLuaInline ''mainMod .. " + B"'')
+            (mkLuaInline "hl.dsp.exec_cmd(browser)")
           ];
         }
         {

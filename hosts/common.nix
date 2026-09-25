@@ -441,7 +441,7 @@
     nautilus
     sushi
     file-roller
-    gthumb
+    kdePackages.gwenview
     lollypop
     evince
     zip
