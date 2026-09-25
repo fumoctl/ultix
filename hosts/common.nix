@@ -334,14 +334,18 @@
     CLUTTER_BACKEND = "wayland";
   };
 
-  services.displayManager.sddm = {
-    enable = true;
-    theme = "catppuccin-mocha-blue";
-    extraPackages = with pkgs; [
-      kdePackages.qt5compat
-      kdePackages.qtsvg
-      kdePackages.qtmultimedia
-    ];
+  services.displayManager = {
+    sddm = {
+      enable = true;
+      wayland.enable = true;
+      theme = "catppuccin-mocha-blue";
+      extraPackages = with pkgs; [
+        kdePackages.qt5compat
+        kdePackages.qtsvg
+        kdePackages.qtmultimedia
+      ];
+    };
+    defaultSession = "hyprland";
   };
 
   # --- Hardware & Input Integrations ---

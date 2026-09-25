@@ -85,6 +85,13 @@ in
 
         decoration = {
           rounding = 12;
+          # Translucency + blur: blur only shows through windows with alpha < 1,
+          # so these opacities produce a frosted-glass look. Active windows are
+          # less transparent than inactive ones. Fullscreen windows stay fully
+          # opaque (default, made explicit) and thus get no transparency/blur.
+          active_opacity = 0.94;
+          inactive_opacity = 0.88;
+          fullscreen_opacity = 1.0;
           blur = {
             enabled = true;
             size = 4;

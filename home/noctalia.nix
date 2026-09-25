@@ -66,7 +66,11 @@
           "kcolorscheme"
         ];
       };
+      wallpaper = {
+          enabled = true;
+          default.path = "../dotfiles/wallpaper.png";
     };
+  };
   };
 
   home.file = {
