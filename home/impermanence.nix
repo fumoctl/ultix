@@ -17,6 +17,8 @@
       "Music"
       "Projects"
       "Games"
+      "ultix"
+      "FumoNix"
       ".vscode"
       ".vscode-shared"
       ".copilot"

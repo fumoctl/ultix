@@ -273,13 +273,11 @@
     CLUTTER_BACKEND = "wayland";
   };
 
-  services.greetd = {
+  services.displayManager.ly = {
     enable = lib.mkDefault true;
     settings = {
-      default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd Hyprland";
-        user = "greeter";
-      };
+      # Hyprland session is picked up from wayland-sessions automatically.
+      numlock = 1;
     };
   };
 
