@@ -41,3 +41,19 @@
 ## Greeter
 - Replaced greetd/tuigreet with ly: `services.displayManager.ly = { enable = ...; settings = { ... }; }` in hosts/common.nix (module is services.displayManager.ly, NOT services.ly).
 - Ly picks up Hyprland from wayland-sessions automatically (programs.hyprland provides it); no explicit session cmd needed. Options live under settings (config.ini atoms), e.g. numlock = 1.
+
+## Cursor theming
+- Defined in home/noctalia.nix via `home.pointerCursor`: Bibata-Modern-Ice, size 24, with `gtk.enable` + `hyprcursor.enable`. This installs the package, links `~/.icons/default` + `$XDG_DATA_HOME/icons`, fills `gtk.cursorTheme`/dconf `cursor-theme`, and exports `XCURSOR_THEME/SIZE` + `HYPRCURSOR_THEME/SIZE` session vars.
+- Belt-and-suspenders: explicit `env = [ { _args = [ "KEY" "VAL" ]; } ]` entries in hyprland.nix `settings` (XCURSOR_*/HYPRCURSOR_*) so the Hyprland session gets them even if ly doesn't source hm-session-vars.sh.
+- nixpkgs `bibata-cursors` ships XCursor themes only (`share/icons/Bibata-*`); hyprcursor transparently falls back to XCursor themes — no separate hyprcursor package needed.
+- GTK dconf cursor keys (cursor-theme/cursor-size under org/gnome/desktop/interface) are set by `home.pointerCursor`'s gtk backend, not by hand.
+
+## Ptyxis / system GTK theme
+- Ptyxis has its OWN `interface-style` GSettings key (default `'dark'` = forced dark, ignores system color-scheme). Values: `system`/`light`/`dark`.
+- To make Ptyxis follow the system theme: `dconf.settings."org/gnome/Ptyxis".interface-style = "system"` (in home/shell.nix) — it then follows `org.gnome.desktop.interface color-scheme`, which Noctalia's gtk3/gtk4 apply hook syncs on light/dark toggle (also via xdg-desktop-portal-gtk settings backend).
+- `org/gnome/desktop/interface/color-scheme = "prefer-dark"` is defaulted in home/noctalia.nix so libadwaita apps start dark before Noctalia's hook first writes the key. dconf is persisted in impermanence; HM's dconf module only sets keys not already present in the user db, so live values win.
+
+## Validation workflows (home-manager)
+- Full HM config check: `nix build --no-link '.#nixosConfigurations.<host>.config.home-manager.users.fumoctl.home.activationPackage'` (camelCase `activationPackage`).
+- Session vars: grep `<generation>/home-path/etc/profile.d/hm-session-vars.sh` (it's under `home-path/etc/`, not `etc/`).
+- dconf values: the generation's `activate` script runs `dconf load / < <store-path>-hm-dconf.ini` — grep that `hm-dconf.ini` store path for final key/value pairs. `state/dconf-keys.json` only lists key paths, not values.
