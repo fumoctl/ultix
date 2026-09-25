@@ -34,7 +34,7 @@
 - App theming = builtin template IDs in `settings.theme.templates.builtin_ids` (allowlist; applied only when listed).
   IDs from `assets/templates/builtin.toml`: gtk3, gtk4, qt, kcolorscheme, hyprland, niri, sway, ghostty, kitty, foot, alacritty, wezterm, starship, etc.
   - `gtk3`/`gtk4` -> `~/.config/gtk-{3,4}.0/noctalia.css`; apply.sh hook imports it into gtk.css, sets adw-gtk3(-dark) + color-scheme via gsettings/dconf (needs `adw-gtk3` + `glib`(gsettings) installed; adw theme found via $XDG_DATA_DIRS themes)
-  - `qt` -> `~/.config/qt{5,6}ct/colors/noctalia.conf`; needs `qt.platformTheme.name = "qtct"` (HM sets QT_QPA_PLATFORMTHEME=qt5ct, which the qt6ct plugin also accepts) + `qt{5,6}ctSettings.Appearance = { custom_palette = true; color_scheme_path = "$HOME/.config/qt6ct/colors/noctalia.conf"; }`
+  - `kcolorscheme` -> KColorScheme files for KDE-style Qt theming; pairs with `qt.platformTheme.name = "kde"` + `home.sessionVariables.QT_QPA_PLATFORMTHEME = "kde"` (replaced the old qt5ct/qt6ct `qt` template approach; `kdePackages.qt6ct` still installed for the platform theme plugin). Old `qt` template (kept for reference): `~/.config/qt{5,6}ct/colors/noctalia.conf` + `qt.platformTheme.name = "qtct"` + `qt{5,6}ctSettings.Appearance = { custom_palette = true; color_scheme_path = ...; }`
 - HM noctalia module validates config at build time (`noctalia config validate`) — build failure = invalid TOML settings.
 - In impermanence: `.config/dconf`, `.config/noctalia`, `.local/state/noctalia` are persisted (noctalia settings.toml overrides live in state dir).
 

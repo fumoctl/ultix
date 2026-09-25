@@ -139,6 +139,10 @@
   dconf.settings = {
     "org/gnome/Ptyxis" = {
       restore-session = false;
+      # Ptyxis defaults to interface-style='dark' (forced dark). 'system' makes
+      # it follow org.gnome.desktop.interface color-scheme instead, so it
+      # switches with Noctalia's light/dark mode via the settings portal.
+      interface-style = "system";
     };
   };
 

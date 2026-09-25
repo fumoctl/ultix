@@ -19,6 +19,7 @@
   home.packages = with pkgs; [
     adw-gtk3
     glib
+    kdePackages.qt6ct
   ];
 
   # GTK theming: use adw-gtk3-dark (matches theme.mode = "dark") so Noctalia's
@@ -30,78 +31,46 @@
     iconTheme.name = "breeze";
   };
 
-  # Qt theming: route Qt5/Qt6 apps through qt5ct/qt6ct (HM installs both and
-  # exports QT_QPA_PLATFORMTHEME) and select the `noctalia` color scheme that
-  # Noctalia's `qt` template writes into ~/.config/qt{5,6}ct/colors/.
+  # Default libadwaita/GNOME color-scheme to prefer-dark so apps like Ptyxis
+  # (with interface-style = "system") start dark before Noctalia's GTK hook
+  # first syncs org.gnome.desktop.interface. dconf is persisted in
+  # impermanence, so this only applies when the key isn't already set.
+  dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+
   qt = {
     enable = true;
-    platformTheme.name = "qtct";
-    qt5ctSettings.Appearance = {
-      custom_palette = true;
-      color_scheme_path = "$HOME/.config/qt5ct/colors/noctalia.conf";
-    };
-    qt6ctSettings.Appearance = {
-      custom_palette = true;
-      color_scheme_path = "$HOME/.config/qt6ct/colors/noctalia.conf";
-    };
+    platformTheme.name = "kde"; # Uses native KDE theming/KColorScheme
+  };
+
+  home.sessionVariables = {
+    QT_QPA_PLATFORMTHEME = "kde";
+  };
+
+  # Cursor theme: Bibata Modern Ice. HM's pointerCursor module installs the
+  # package, links it into ~/.icons & $XDG_DATA_HOME/icons and exports
+  # XCURSOR_THEME/XCURSOR_SIZE + HYPRCURSOR_THEME/HYPRCURSOR_SIZE session vars.
+  # gtk.enable also fills gtk.cursorTheme for the settings.ini/dconf config
+  # above (so GTK apps match). Hyprland has no native hyprcursor theme here,
+  # but hyprcursor falls back to the XCursor theme from $share/icons.
+  home.pointerCursor = {
+    enable = true;
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Ice";
+    size = 24;
+    gtk.enable = true;
+    hyprcursor.enable = true;
   };
 
   programs.noctalia = {
     enable = true;
     systemd.enable = true;
-
     settings = {
       theme = {
-        mode = "dark";
-        source = "builtin";
-        builtin = "Catppuccin";
-
-        # Built-in theme templates (this list is the allowlist). Enables
-        # app theming so the Noctalia palette follows GTK & Qt apps:
-        #   gtk3/gtk4 -> ~/.config/gtk-{3,4}.0/noctalia.css + apply.sh hook
-        #   that imports it into gtk.css and syncs adw-gtk3(-dark) +
-        #   org.gnome.desktop.interface color-scheme on dark/light switches.
-        #   qt -> ~/.config/qt{5,6}ct/colors/noctalia.conf palettes
         templates.builtin_ids = [
           "gtk3"
           "gtk4"
-          "qt"
+          "kcolorscheme"
         ];
-      };
-
-      wallpaper = {
-        enabled = true;
-      };
-
-      shell = {
-        clipboard_enabled = true;
-        clipboard_history_max_entries = 100;
-        clipboard_keep_from_closed_apps = true;
-        clipboard_auto_paste = "auto";
-      };
-
-      bar = {
-        position = "top";
-        widgets = {
-          left = [
-            "launcher"
-            "workspaces"
-            "active_window"
-          ];
-          center = [
-            "clock"
-            "media"
-          ];
-          right = [
-            "tray"
-            "clipboard"
-            "volume"
-            "network"
-            "bluetooth"
-            "battery"
-            "control-center"
-          ];
-        };
       };
     };
   };

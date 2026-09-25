@@ -27,6 +27,18 @@ in
       fileManager = { _var = "nautilus --new-window"; };
       browser = { _var = "brave --new-window"; };
 
+      # Session environment: default cursor theme (Bibata Modern Ice, an
+      # XCursor theme in share/icons; hyprcursor falls back to XCursor themes).
+      # The same values are exported via home.pointerCursor in noctalia.nix,
+      # this makes them explicit for the Hyprland session itself.
+      env = [
+        { _args = [ "QT_QPA_PLATFORMTHEME" "kde" ]; }
+        { _args = [ "XCURSOR_THEME" "Bibata-Modern-Ice" ]; }
+        { _args = [ "XCURSOR_SIZE" "24" ]; }
+        { _args = [ "HYPRCURSOR_THEME" "Bibata-Modern-Ice" ]; }
+        { _args = [ "HYPRCURSOR_SIZE" "24" ]; }
+      ];
+
       # Autostart Noctalia desktop shell & export session environment
       on = [
         {
