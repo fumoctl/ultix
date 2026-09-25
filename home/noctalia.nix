@@ -68,8 +68,9 @@
       };
       wallpaper = {
           enabled = true;
+          path = "../dotfiles/wallpaper.png";
           default.path = "../dotfiles/wallpaper.png";
-    };
+      };
   };
   };
 

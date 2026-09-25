@@ -90,6 +90,14 @@
     ];
   };
 
+  # GNOME Keyring: secret service (libsecret) + PKCS#11, DBus-activated and
+  # started per-user by Home Manager. The NixOS module auto-unlocks via the
+  # `login` PAM service; SDDM is the actual entry point here, so it needs its
+  # own PAM hook. SSH component is intentionally NOT enabled (HM side):
+  # gpg-agent already provides the SSH agent via programs.gnupg.agent.
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.sddm.enableGnomeKeyring = true;
+
   time.timeZone = lib.mkDefault "America/Sao_Paulo";
   services.automatic-timezoned.enable = true;
 
@@ -138,152 +146,11 @@
     };
   };
 
-  # --- Impermanence & Btrfs Rollback ---
-  fileSystems."/persist".neededForBoot = true;
-  fileSystems."/home".neededForBoot = true;
-
-  boot.initrd.systemd = {
-    enable = true;
-    services.btrfs-rollback = {
-      description = "Rollback BTRFS root subvolume to pristine state";
-      wantedBy = [ "initrd.target" ];
-      after = [
-        "systemd-cryptsetup@crypted.service"
-        "initrd-root-device.target"
-      ];
-      before = [ "sysroot.mount" ];
-      unitConfig.DefaultDependencies = "no";
-      serviceConfig.Type = "oneshot";
-      script = ''
-        mkdir -p /btrfs_tmp
-        mount -o subvol=/ /dev/mapper/crypted /btrfs_tmp
-
-        if [ -e /btrfs_tmp/@ ]; then
-          mkdir -p /btrfs_tmp/@old_roots
-          timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/@)" "+%Y-%m-%d_%H:%M:%S" 2>/dev/null || date "+%Y-%m-%d_%H:%M:%S")
-          echo "Archiving current root into /@old_roots/@_$timestamp"
-          mv /btrfs_tmp/@ "/btrfs_tmp/@old_roots/@_$timestamp"
-        fi
-
-        delete_subvol_recursive() {
-          IFS=$'\n'
-          for sub in $(btrfs subvolume list -o "$1" 2>/dev/null | cut -f 9- -d ' '); do
-            delete_subvol_recursive "/btrfs_tmp/$sub"
-          done
-          btrfs subvolume delete "$1"
-        }
-
-        for old in $(find /btrfs_tmp/@old_roots/ -maxdepth 1 -mtime +30 2>/dev/null); do
-          echo "Purging expired snapshot: $old"
-          delete_subvol_recursive "$old"
-        done
-
-        if [ -e /btrfs_tmp/@blank ]; then
-          echo "Restoring pristine root from @blank snapshot"
-          btrfs subvolume snapshot /btrfs_tmp/@blank /btrfs_tmp/@
-        else
-          echo "WARNING: @blank snapshot not found, creating fresh empty @ subvolume"
-          btrfs subvolume create /btrfs_tmp/@
-        fi
-
-        umount /btrfs_tmp
-      '';
-    };
-  };
-
-  environment.persistence."/persist" = {
-    hideMounts = true;
-    directories = [
-      "/var/log"
-      "/var/lib/bluetooth"
-      "/var/lib/nixos"
-      "/var/lib/systemd/coredump"
-      "/etc/NetworkManager/system-connections"
-      "/var/lib/docker"
-      "/var/lib/containers"
-      "/var/lib/libvirt"
-    ];
-    files = [
-      "/etc/machine-id"
-      {
-        file = "/etc/ssh/ssh_host_ed25519_key";
-        parentDirectory = { mode = "0755"; };
-      }
-      {
-        file = "/etc/ssh/ssh_host_ed25519_key.pub";
-        parentDirectory = { mode = "0755"; };
-      }
-      {
-        file = "/etc/ssh/ssh_host_rsa_key";
-        parentDirectory = { mode = "0755"; };
-      }
-      {
-        file = "/etc/ssh/ssh_host_rsa_key.pub";
-        parentDirectory = { mode = "0755"; };
-      }
-    ];
-  
-    users.fumoctl = {
-      directories = [
-        "Downloads"
-        "Documents"
-        "Pictures"
-        "Videos"
-        "Music"
-        "Projects"
-        "Games"
-        "ultix"
-        "FumoNix"
-        ".vscode"
-        ".vscode-shared"
-        ".copilot"
-        ".gemini"
-        ".duckdb"
-        ".steam"
-        { directory = ".ssh"; mode = "0700"; }
-        { directory = ".gnupg"; mode = "0700"; }
-        ".var/app"
-        ".local/share/direnv"
-        ".local/share/steam"
-        ".local/share/bottles"
-        ".local/share/flatpak"
-        ".local/share/containers"
-        ".local/share/trash"
-        ".local/share/nix"
-        ".local/share/keyrings"
-        ".local/share/themes"
-        ".local/share/icons"
-        ".local/share/color-schemes"
-        ".local/state/noctalia"
-        ".local/state/wireplumber"
-        ".config/noctalia"
-        ".config/gtk-3.0"
-        ".config/gtk-4.0"
-        ".config/Code"
-        ".config/Antigravity"
-        ".config/equibop"
-        ".config/BraveSoftware"
-        ".config/MangoHud"
-        ".config/dconf"
-        ".config/lollypop"
-        ".config/nautilus"
-        ".local/share/lollypop"
-        ".local/share/nautilus"
-        ".local/share/noctalia"
-        ".local/share/gvfs-metadata"
-      ];
-
-      files = [
-        ".zsh_history"
-      ];
-    };
-
-  };
-
   # --- Desktop Subsystem (Hyprland & Noctalia) ---
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
+    withUWSM  = true;
   };
 
   programs.noctalia = {
@@ -339,6 +206,11 @@
       enable = true;
       wayland.enable = true;
       theme = "catppuccin-mocha-blue";
+      settings = {
+        Wayland = {
+          CompositorCommand = "Hyprland -c ${./greeter-hyprland.conf}";
+        };
+      };
       extraPackages = with pkgs; [
         kdePackages.qt5compat
         kdePackages.qtsvg
@@ -346,7 +218,7 @@
       ];
     };
     defaultSession = "hyprland";
-  };
+  }; 
 
   # --- Hardware & Input Integrations ---
   networking = {
