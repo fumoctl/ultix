@@ -20,6 +20,7 @@
       ".vscode"
       ".vscode-shared"
       ".copilot"
+      ".gemini"
       ".duckdb"
       ".steam"
       ".ssh"
