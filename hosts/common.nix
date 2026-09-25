@@ -207,9 +207,7 @@
       wayland.enable = true;
       theme = "catppuccin-mocha-blue";
       settings = {
-        Wayland = {
-          CompositorCommand = "Hyprland -c ${./greeter-hyprland.conf}";
-        };
+        
       };
       extraPackages = with pkgs; [
         kdePackages.qt5compat
