@@ -114,11 +114,12 @@ in
       ];
 
       animation = [
+        # every hl.animation requires bezier = "..." or spring = "..."
         { leaf = "windows"; enabled = true; speed = 5; bezier = "myBezier"; }
-        { leaf = "windowsOut"; enabled = true; speed = 5; style = "popin 80%"; }
-        { leaf = "border"; enabled = true; speed = 8; }
-        { leaf = "fade"; enabled = true; speed = 5; }
-        { leaf = "workspaces"; enabled = true; speed = 4; }
+        { leaf = "windowsOut"; enabled = true; speed = 5; bezier = "myBezier"; style = "popin 80%"; }
+        { leaf = "border"; enabled = true; speed = 8; bezier = "default"; }
+        { leaf = "fade"; enabled = true; speed = 5; bezier = "default"; }
+        { leaf = "workspaces"; enabled = true; speed = 4; bezier = "default"; }
       ];
 
       # Layer rules for Noctalia desktop shell
