@@ -224,8 +224,6 @@
     ];
   
     users.fumoctl = {
-      user = "fumoctl";
-      group = "fumoctl";
       directories = [
         "Downloads"
         "Documents"
@@ -601,6 +599,8 @@
     autoSubUidGidRange = true;
     initialPassword = "changeme";
   };
+
+  users.groups.fumoctl = {};
 
   home-manager = {
     useGlobalPkgs = true;
