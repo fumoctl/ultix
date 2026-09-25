@@ -21,7 +21,6 @@
 
     noctalia = {
       url = "github:noctalia-dev/noctalia";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
