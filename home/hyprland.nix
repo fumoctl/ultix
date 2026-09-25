@@ -87,7 +87,9 @@ in
         animations.enabled = true;
 
         dwindle = {
-          pseudotile = true;
+          # NOTE: dwindle.pseudotile was removed in Hyprland 0.55's Lua config.
+          # Pseudo is now per-window only: SUPER+P bind (hl.dsp.window.pseudo())
+          # or a windowrule effect `pseudo = true`.
           preserve_split = true;
         };
 
