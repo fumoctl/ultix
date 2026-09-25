@@ -11,7 +11,6 @@
     inputs.nix-flatpak.homeManagerModules.nix-flatpak
     ./hyprland.nix
     ./noctalia.nix
-    ./impermanence.nix
     ./shell.nix
   ];
 

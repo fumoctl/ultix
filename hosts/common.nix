@@ -222,6 +222,61 @@
         parentDirectory = { mode = "0755"; };
       }
     ];
+  
+    users.fumoctl = {
+      user = "fumoctl";
+      group = "fumoctl";
+      directories = [
+        "Downloads"
+        "Documents"
+        "Pictures"
+        "Videos"
+        "Music"
+        "Projects"
+        "Games"
+        "ultix"
+        "FumoNix"
+        ".vscode"
+        ".vscode-shared"
+        ".copilot"
+        ".gemini"
+        ".duckdb"
+        ".steam"
+        { directory = ".ssh"; mode = "0700"; }
+        { directory = ".gnupg"; mode = "0700"; }
+        ".var/app"
+        ".local/share/direnv"
+        ".local/share/steam"
+        ".local/share/bottles"
+        ".local/share/flatpak"
+        ".local/share/containers"
+        ".local/share/trash"
+        ".local/share/nix"
+        ".local/share/keyrings"
+        ".local/share/themes"
+        ".local/share/icons"
+        ".local/state/noctalia"
+        ".local/state/wireplumber"
+        ".config/noctalia"
+        ".config/Code"
+        ".config/Antigravity"
+        ".config/equibop"
+        ".config/BraveSoftware"
+        ".config/MangoHud"
+        ".config/dconf"
+        ".config/lollypop"
+        ".config/nautilus"
+        ".local/share/lollypop"
+        ".local/share/nautilus"
+        ".local/share/noctalia"
+        ".local/share/gvfs-metadata"
+      ];
+
+      files = [
+        ".zsh_history"
+      ];
+    };
+
   };
 
   # --- Desktop Subsystem (Hyprland & Noctalia) ---
@@ -527,8 +582,10 @@
   users.users.fumoctl = {
     isNormalUser = true;
     description = "JuanU";
+    group = "fumoctl";
     extraGroups = [
       "wheel"
+      "users"
       "networkmanager"
       "video"
       "audio"
