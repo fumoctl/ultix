@@ -204,7 +204,6 @@
   services.displayManager = {
     sddm = {
       enable = true;
-      wayland.enable = true;
       theme = "catppuccin-mocha-blue";
       settings = {
         
@@ -274,6 +273,7 @@
       pkgs.unstable.lsfg-vk
     ];
   };
+  services.xserver.enable = true;
 
   programs.gamemode.enable = true;
   programs.gamescope.enable = true;
