@@ -18,9 +18,13 @@
 
     Because ```users.mutableUsers = false``` and ```hashedPasswordFile = "/persist/passwords/fumoctl"``` are enforced, you must seed the password hash into ```/persist``` before installing, or the account will be locked on first boot:
     
-    ```bash
+    ```
     sudo mkdir -p /mnt/persist/passwords
+    ```
+    ```
     nix-shell -p mkpasswd --run 'mkpasswd -m sha-512' | sudo tee /mnt/persist/passwords/fumoctl
+    ```
+    ```
     sudo chmod 600 /mnt/persist/passwords/fumoctl
     ```
 
