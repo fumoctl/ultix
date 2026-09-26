@@ -33,7 +33,8 @@
   );
 
   # NVIDIA PRIME hybrid graphics
-  services.xserver.videoDrivers = ["modesetting" "nvidia"];
+  boot.initrd.kernelModules = [ "amdgpu" ];
+  services.xserver.videoDrivers = ["amdgpu" "nvidia"];
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
