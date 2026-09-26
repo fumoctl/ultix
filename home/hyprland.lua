@@ -54,6 +54,15 @@ hl.config({
     layout = "dwindle",
   },
 
+  input = {
+    accel_profile = "flat",
+    kb_layout  = "us",
+    kb_variant = "altgr-intl",
+    kb_model   = "",
+    kb_options = "lv3:ralt_switch",
+    kb_rules   = "",
+  },
+
   decoration = {
     rounding = 12,
     active_opacity = 0.94,
@@ -86,9 +95,7 @@ hl.config({
     disable_hyprland_logo = true,
   },
 
-  input = {
-    accel_profile = "flat",
-  },
+  
 })
 
 -- Device-specific settings
