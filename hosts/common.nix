@@ -114,6 +114,7 @@
       "/var/lib/libvirt"
       "/var/lib/nixos"
       "/var/lib/systemd"
+      "/var/lib/sbctl"
     ];
     files = [ "/etc/machine-id" ];
     users.fumoctl = {
@@ -136,6 +137,8 @@
         ".config/lsfg-vk"
         ".config/org.gnome.ptyxis"
         ".config/containers"
+        ".config/com.github.githubapp"
+        ".config/Antigravity"
         ".local/share/Steam"
         ".local/share/containers"
         ".local/share/direnv"
@@ -149,6 +152,7 @@
         ".duckdb"
         ".copilot"
         ".steam"
+        ".gemini"
         { directory = ".gnupg"; mode = "0700"; }
         { directory = ".ssh"; mode = "0700"; }
       ];
