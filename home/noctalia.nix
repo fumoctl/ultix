@@ -82,7 +82,7 @@
   home.file = {
   # Target path (relative to home directory)
   ".config/noctalia/noctconf.toml" = {
-    source = ./noctconf.toml;  # Path to file
+    source = ./noctalia.toml;  # Path to file
     recursive = true;       # If source is a directory
   };
   };
