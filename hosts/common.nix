@@ -114,7 +114,6 @@
       "/var/lib/libvirt"
       "/var/lib/nixos"
       "/var/lib/systemd"
-      "/etc/ly"
     ];
     files = [ "/etc/machine-id" ];
     users.fumoctl = {
@@ -142,6 +141,7 @@
         ".local/share/direnv"
         ".local/share/flatpak"
         ".local/share/keyrings"
+        ".local/state/noctalia"
         ".thunderbird"
         ".var/app"
         ".vscode"
@@ -153,9 +153,7 @@
         { directory = ".ssh"; mode = "0700"; }
       ];
       files = [
-        ".zsh_history"
-        "ly-session.log"
-        ".local/state/noctalia/settings.toml"
+        ".config/zsh/.zsh_history"
       ];
     };
   };
