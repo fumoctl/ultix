@@ -114,6 +114,7 @@
       "/var/lib/libvirt"
       "/var/lib/nixos"
       "/var/lib/systemd"
+      "/etc/ly"
     ];
     files = [ "/etc/machine-id" ];
     users.fumoctl = {
@@ -130,12 +131,14 @@
         "Games"
         ".config/BraveSoftware"
         ".config/Code"
-        ".config/Equibop"
+        ".config/equibop"
         ".config/dconf"
         ".config/gh"
         ".config/lsfg-vk"
         ".config/org.gnome.ptyxis"
+        ".config/containers"
         ".local/share/Steam"
+        ".local/share/containers"
         ".local/share/direnv"
         ".local/share/flatpak"
         ".local/share/keyrings"
@@ -149,7 +152,11 @@
         { directory = ".gnupg"; mode = "0700"; }
         { directory = ".ssh"; mode = "0700"; }
       ];
-      files = [ ".zsh_history" ];
+      files = [
+        ".zsh_history"
+        "ly-session.log"
+        ".local/state/noctalia/settings.toml"
+      ];
     };
   };
 
