@@ -47,6 +47,12 @@ scale = 1.1000000000000001
 [widget.mirror]
 type = "elijaharch/wl-screen-mirror:mirror"
 
+[widget.battery]
+scale = 1.1000000000000001
+
+[widget.brightness]
+scale = 1.1000000000000001
+
 [plugins]
 enabled = ["elijaharch/wl-screen-mirror"]
 
