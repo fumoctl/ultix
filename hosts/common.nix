@@ -204,7 +204,7 @@
   services.displayManager = {
     sddm = {
       enable = true;
-      wayland.enable = false;
+      wayland.enable = true;
       theme = "catppuccin-mocha-blue";
       settings = {
         
