@@ -385,6 +385,11 @@
       dockerSocket.enable = false;
       defaultNetwork.settings.dns_enabled = true;
     };
+    containers.storage.settings = {
+      storage = {
+        driver = "overlay";
+      };
+    };
     oci-containers = {
       backend = "podman";
       containers = {
