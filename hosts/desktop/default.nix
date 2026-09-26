@@ -15,7 +15,7 @@
   networking.hostName = "fumonix-desktop";
 
   boot.loader.limine = {
-    secureBoot.enable = lib.mkDefault true;
+    secureBoot.enable = lib.mkDefault false;
   };
 
   # AMD GPU hardware acceleration
