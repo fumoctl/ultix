@@ -69,6 +69,13 @@
       wallpaper = {
           enabled = true;
       };
+      settings = {
+      plugins = {
+        # Community source is built-in; just make sure it's enabled
+        enabled = [ "elijaharch/wl-screen-mirror" ];
+      };
+    };
+
   };
   };
 

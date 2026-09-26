@@ -1,7 +1,7 @@
 [bar.default]
 capsule_group = []
 center = [ "clock", "date" ]
-end = [ "tray", "notifications", "clipboard", "network", "bluetooth", "volume", "brightness", "battery", "control-center" ]
+end = [ "tray", "notifications", "clipboard", "network", "bluetooth", "mirror", "volume", "brightness", "battery", "control-center" ]
 font_family = "JetBrainsMono NF Medium"
 font_weight = 400
 margin_edge = 5
@@ -43,3 +43,11 @@ type = "spacer"
 [widget.volume]
 glyph = "volume"
 scale = 1.1000000000000001
+
+[widget.mirror]
+type = "elijaharch/wl-screen-mirror:mirror"
+
+[plugins]
+enabled = ["elijaharch/wl-screen-mirror"]
+
+

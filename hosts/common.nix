@@ -418,6 +418,7 @@
 
     # Wayland & Desktop Integration
     wl-clipboard
+    wl-mirror
     grim
     slurp
     brightnessctl
