@@ -96,7 +96,7 @@
   # own PAM hook. SSH component is intentionally NOT enabled (HM side):
   # gpg-agent already provides the SSH agent via programs.gnupg.agent.
   services.gnome.gnome-keyring.enable = true;
-  security.pam.services.sddm.enableGnomeKeyring = true;
+  security.pam.services.ly.enableGnomeKeyring = true;
 
   time.timeZone = lib.mkDefault "America/Sao_Paulo";
   services.automatic-timezoned.enable = true;
@@ -202,18 +202,8 @@
   };
 
   services.displayManager = {
-    sddm = {
+    ly = {
       enable = true;
-      wayland.enable = true;
-      theme = "catppuccin-mocha-blue";
-      settings = {
-        
-      };
-      extraPackages = with pkgs; [
-        kdePackages.qt5compat
-        kdePackages.qtsvg
-        kdePackages.qtmultimedia
-      ];
     };
     defaultSession = "hyprland-uwsm";
   }; 
@@ -427,10 +417,6 @@
     wireplumber
     libnotify
     bibata-cursors
-    (catppuccin-sddm.override {
-      flavor = "mocha";
-      accent = "blue";
-    })
 
     # Gaming & Performance
     lact
