@@ -67,6 +67,98 @@
     };
   };
 
+  # Recreate the root subvolume from scratch before the normal root mount.
+  boot.initrd.systemd.initrdBin = with pkgs; [
+    btrfs-progs
+    coreutils
+    gnused
+    util-linux
+  ];
+  boot.initrd.systemd.services.impermanence-clean-root = {
+    description = "Recreate the ephemeral Btrfs root subvolume";
+    wantedBy = [ "initrd.target" ];
+    after = [ "dev-mapper-crypted.device" ];
+    before = [ "sysroot.mount" ];
+    unitConfig.DefaultDependencies = "no";
+    serviceConfig.Type = "oneshot";
+    script = ''
+      set -e
+      mkdir -p /btrfs_tmp
+      mount -t btrfs -o subvolid=5 /dev/mapper/crypted /btrfs_tmp
+
+      if [ -e /btrfs_tmp/@ ]; then
+        btrfs subvolume list -o /btrfs_tmp/@ \
+          | sed -n 's/^.* path //p' \
+          | sort -r \
+          | while IFS= read -r subvolume; do
+              btrfs subvolume delete "/btrfs_tmp/$subvolume"
+            done
+        btrfs subvolume delete /btrfs_tmp/@
+      fi
+
+      btrfs subvolume create /btrfs_tmp/@
+      umount /btrfs_tmp
+    '';
+  };
+
+  environment.persistence."/persist" = {
+    hideMounts = true;
+    directories = [
+      "/etc/NetworkManager/system-connections"
+      "/var/lib/AccountsService"
+      "/var/lib/NetworkManager"
+      "/var/lib/bluetooth"
+      "/var/lib/containers"
+      "/var/lib/docker"
+      "/var/lib/flatpak"
+      "/var/lib/libvirt"
+      "/var/lib/nixos"
+      "/var/lib/systemd"
+    ];
+    files = [ "/etc/machine-id" ];
+    users.fumoctl = {
+      directories = [
+        "Desktop"
+        "Documents"
+        "Downloads"
+        "Music"
+        "Pictures"
+        "Public"
+        "Templates"
+        "Videos"
+        "Projects"
+        "Games"
+        ".config/BraveSoftware"
+        ".config/Code"
+        ".config/Equibop"
+        ".config/dconf"
+        ".config/gh"
+        ".config/lsfg-vk"
+        ".config/org.gnome.ptyxis"
+        ".local/share/Steam"
+        ".local/share/direnv"
+        ".local/share/flatpak"
+        ".local/share/keyrings"
+        ".thunderbird"
+        ".var/app"
+        ".vscode"
+        ".vscode-shared"
+        ".duckdb"
+        ".copilot"
+        ".steam"
+        { directory = ".gnupg"; mode = "0700"; }
+        { directory = ".ssh"; mode = "0700"; }
+      ];
+      files = [ ".zsh_history" ];
+    };
+  };
+
+  fileSystems = {
+    "/persist".neededForBoot = true;
+    "/nix".neededForBoot = true;
+    "/var/log".neededForBoot = true;
+  };
+
   # System Limits & Systemd Tweaks
   systemd.settings.Manager.DefaultLimitNOFILE = "1048576";
   systemd.user.extraConfig = ''
@@ -455,8 +547,11 @@
   # --- User Declaration & Home Manager Integration ---
   programs.zsh.enable = true;
 
+  users.mutableUsers = false;
+  users.groups.fumoctl = {};
   users.users.fumoctl = {
     isNormalUser = true;
+    hashedPasswordFile = "/persist/passwords/fumoctl";
     description = "JuanU";
     group = "fumoctl";
     extraGroups = [
@@ -475,10 +570,7 @@
     shell = pkgs.zsh;
     linger = true;
     autoSubUidGidRange = true;
-    initialPassword = "changeme";
   };
-
-  users.groups.fumoctl = {};
 
   home-manager = {
     useGlobalPkgs = true;

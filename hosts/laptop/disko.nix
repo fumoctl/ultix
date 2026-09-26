@@ -33,11 +33,6 @@
                       mountOptions = [ "compress=zstd" "noatime" ];
                     };
 
-                    "@home" = {
-                      mountpoint = "/home";
-                      mountOptions = [ "compress=zstd" "noatime" ];
-                    };
-
                     "@persist" = {
                       mountpoint = "/persist";
                       mountOptions = [ "compress=zstd" "noatime" ];
@@ -60,6 +55,7 @@
 
                     "@swap" = {
                       mountpoint = "/.swapvol";
+                      mountOptions = [ "noatime" "nodatacow" ];
                       swap.swapfile.size = "32G";
                     };
                   };
