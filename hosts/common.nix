@@ -215,7 +215,7 @@
         kdePackages.qtmultimedia
       ];
     };
-    defaultSession = "hyprland";
+    defaultSession = "hyprland-uwsm";
   }; 
 
   # --- Hardware & Input Integrations ---
@@ -400,6 +400,8 @@
     ripgrep
     fd
     btrfs-progs
+    libsecret
+    seahorse
 
     # Container Orchestration & K8s
     docker-compose
