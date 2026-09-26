@@ -33,7 +33,7 @@
   );
 
   # NVIDIA PRIME hybrid graphics
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = ["modesetting" "nvidia"];
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
@@ -48,7 +48,7 @@
         config.boot.kernelPackages.nvidiaPackages.stable
     );
     powerManagement.enable = true;
-    powerManagement.finegrained = false;
+    powerManagement.finegrained = true;
     nvidiaSettings = true;
     prime = {
       offload = {
