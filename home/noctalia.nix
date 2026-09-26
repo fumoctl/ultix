@@ -82,8 +82,14 @@
   home.file = {
   # Target path (relative to home directory)
   ".config/noctalia/noctconf.toml" = {
-    source = ../dotfiles/noctconf.toml;  # Path to file
+    source = ./noctconf.toml;  # Path to file
     recursive = true;       # If source is a directory
   };
+  };
+
+  wayland.windowManager.hyprland = {
+    enable = true;
+    configType = "lua";
+    extraConfig = builtins.readFile ./hyprland.lua;
   };
 }

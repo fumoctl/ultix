@@ -9,7 +9,6 @@
 {
   imports = [
     inputs.nix-flatpak.homeManagerModules.nix-flatpak
-    ./hyprland.nix
     ./noctalia.nix
     ./shell.nix
   ];
