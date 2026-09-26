@@ -371,7 +371,7 @@
     file-roller
     kdePackages.gwenview
     lollypop
-    evince
+    kdePackages.okular
     zip
     unzip
 

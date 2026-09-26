@@ -233,8 +233,8 @@
       "application/x-bzip2" = "org.gnome.FileRoller.desktop";
       "application/x-xz" = "org.gnome.FileRoller.desktop";
 
-      # Documents & PDF
-      "application/pdf" = "org.gnome.Evince.desktop";
+      # Documents & PDF (Okular)
+      "application/pdf" = "org.kde.okular.desktop";
 
       # Video Players
       "video/mp4" = "mpv.desktop";
@@ -243,6 +243,12 @@
       "video/x-matroska" = "mpv.desktop";
       "video/quicktime" = "mpv.desktop";
       "video/x-msvideo" = "mpv.desktop";
+
+      # Windows executables (Bottles)
+      "application/x-ms-dos-executable" = "com.usebottles.bottles.desktop";
+      "application/x-msdownload" = "com.usebottles.bottles.desktop";
+      "application/x-msi" = "com.usebottles.bottles.desktop";
+      "application/vnd.microsoft.portable-executable" = "com.usebottles.bottles.desktop";
     };
   };
 }
