@@ -116,10 +116,14 @@
       "/var/lib/systemd"
       "/var/lib/sbctl"
     ];
-    files = [ "/etc/machine-id" ];
+    files = [
+      "/etc/machine-id"
+      "/etc/ly/save.txt"
+      ];
     users.fumoctl = {
       directories = [
         "Desktop"
+        "Applications"
         "Documents"
         "Downloads"
         "Music"
@@ -135,10 +139,10 @@
         ".config/dconf"
         ".config/gh"
         ".config/lsfg-vk"
-        ".config/org.gnome.ptyxis"
         ".config/containers"
         ".config/com.github.githubapp"
         ".config/Antigravity"
+        ".config/MangoHud"
         ".local/share/Steam"
         ".local/share/containers"
         ".local/share/direnv"
