@@ -3,35 +3,32 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
+    impermanence = {
+      url = "github:nix-community/impermanence";
+    };
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    impermanence = {
-      url = "github:nix-community/impermanence";
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-
     noctalia = {
       url = "github:noctalia-dev/noctalia";
     };
-
-    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
-
-    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
-
     github-copilot-nix = {
       url = "github:fumoctl/GithubCopilot-Nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-
     antigravity-nix = {
       url = "github:jacopone/antigravity-nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
