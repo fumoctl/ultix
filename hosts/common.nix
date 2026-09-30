@@ -148,6 +148,7 @@
         ".local/share/direnv"
         ".local/share/flatpak"
         ".local/share/keyrings"
+        ".local/share/Trash"
         ".local/state/noctalia"
         ".thunderbird"
         ".var/app"
@@ -467,6 +468,7 @@
     nautilus
     sushi
     file-roller
+    icoextract
     kdePackages.gwenview
     lollypop
     kdePackages.okular
