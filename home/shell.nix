@@ -142,6 +142,19 @@
     };
   };
 
+  xdg.configFile."Thunar/uca.xml".text = ''
+    <?xml version="1.0" encoding="UTF-8" ?>
+    <actions>
+      <action>
+        <name>Open Terminal Here</name>
+        <command>ptyxis --new-window -d %f</command>
+        <description>Open Ptyxis in the current folder</description>
+        <patterns>*</patterns>
+        <directories/>
+      </action>
+    </actions>
+  '';
+
   # XDG MIME associations
   xdg.mimeApps = {
     enable = true;
@@ -196,7 +209,7 @@
       "text/x-makefile" = "code.desktop";
       "text/x-cmake" = "code.desktop";
 
-      "inode/directory" = "org.gnome.Nautilus.desktop";
+      "inode/directory" = "Thunar.desktop";
 
       # Photos & Images (Gwenview)
       "image/jpeg" = "org.kde.gwenview.desktop";
@@ -220,18 +233,18 @@
       "audio/x-wav" = "org.gnome.Lollypop.desktop";
 
       # Compressed Archives
-      "application/zip" = "org.gnome.FileRoller.desktop";
-      "application/x-tar" = "org.gnome.FileRoller.desktop";
-      "application/x-compressed-tar" = "org.gnome.FileRoller.desktop";
-      "application/x-bzip-compressed-tar" = "org.gnome.FileRoller.desktop";
-      "application/x-xz-compressed-tar" = "org.gnome.FileRoller.desktop";
-      "application/x-zstd-compressed-tar" = "org.gnome.FileRoller.desktop";
-      "application/x-7z-compressed" = "org.gnome.FileRoller.desktop";
-      "application/vnd.rar" = "org.gnome.FileRoller.desktop";
-      "application/x-rar" = "org.gnome.FileRoller.desktop";
-      "application/gzip" = "org.gnome.FileRoller.desktop";
-      "application/x-bzip2" = "org.gnome.FileRoller.desktop";
-      "application/x-xz" = "org.gnome.FileRoller.desktop";
+      "application/zip" = "xarchiver.desktop";
+      "application/x-tar" = "xarchiver.desktop";
+      "application/x-compressed-tar" = "xarchiver.desktop";
+      "application/x-bzip-compressed-tar" = "xarchiver.desktop";
+      "application/x-xz-compressed-tar" = "xarchiver.desktop";
+      "application/x-zstd-compressed-tar" = "xarchiver.desktop";
+      "application/x-7z-compressed" = "xarchiver.desktop";
+      "application/vnd.rar" = "xarchiver.desktop";
+      "application/x-rar" = "xarchiver.desktop";
+      "application/gzip" = "xarchiver.desktop";
+      "application/x-bzip2" = "xarchiver.desktop";
+      "application/x-xz" = "xarchiver.desktop";
 
       # Documents & PDF (Okular)
       "application/pdf" = "org.kde.okular.desktop";

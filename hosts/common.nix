@@ -144,6 +144,7 @@
         ".config/com.github.githubapp"
         ".config/Antigravity"
         ".config/MangoHud"
+        ".config/xfce4"
         ".local/share/Steam"
         ".local/share/containers"
         ".local/share/direnv"
@@ -435,10 +436,14 @@
   services.gvfs.enable = true;
   services.tumbler.enable = true;
 
-  programs.nautilus-open-any-terminal = {
+  programs.thunar = {
     enable = true;
-    terminal = "ptyxis";
+    plugins = with pkgs; [
+      thunar-archive-plugin
+      thunar-volman
+    ];
   };
+  programs.xfconf.enable = true;
 
   # --- System Utilities & Developer Tooling ---
   programs.direnv = {
@@ -466,9 +471,8 @@
     meld
 
     # File Management & Media Openers
-    nautilus
-    sushi
-    file-roller
+    thunar
+    xarchiver
     icoextract
     kdePackages.gwenview
     lollypop

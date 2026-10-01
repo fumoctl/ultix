@@ -7,7 +7,7 @@
 -- Variables
 local mainMod = "SUPER"
 local terminal = "ptyxis --new-window"
-local fileManager = "nautilus --new-window"
+local fileManager = "thunar"
 local browser = "brave --new-window"
 
 -- Session environment
