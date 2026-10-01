@@ -103,6 +103,7 @@
 
   environment.persistence."/persist" = {
     hideMounts = true;
+    allowTrash = true;
     directories = [
       "/etc/NetworkManager/system-connections"
       "/var/lib/AccountsService"
