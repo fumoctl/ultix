@@ -284,10 +284,11 @@
     extraPortals = [
       pkgs.xdg-desktop-portal-hyprland
       pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-gnome
     ];
     config = {
       common = {
-        default = [ "hyprland" "gtk" ];
+        default = [ "gtk" ];
       };
       # NOTE: this per-DE section overrides `common` for ALL interfaces when
       # XDG_CURRENT_DESKTOP=Hyprland. The hyprland backend only implements
@@ -296,6 +297,7 @@
       # and libadwaita apps (Ptyxis etc.) always see light mode.
       hyprland = {
         default = [ "hyprland" "gtk" ];
+        "org.freedesktop.impl.portal.OpenURI" = "gnome";
       };
     };
   };
