@@ -145,6 +145,7 @@
         ".config/Antigravity"
         ".config/MangoHud"
         ".config/xfce4"
+        ".config/AmneziaVPN.ORG"
         ".local/share/Steam"
         ".local/share/containers"
         ".local/share/direnv"
@@ -342,6 +343,11 @@
       enable = true;
       checkReversePath = "loose";
     };
+  };
+
+  programs.amnezia-vpn = {
+    enable = true;
+    package = pkgs.unstable.amnezia-vpn;
   };
 
   hardware.bluetooth = {
