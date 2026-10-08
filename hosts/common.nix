@@ -161,10 +161,6 @@
         ".copilot"
         ".steam"
         ".gemini"
-        "Android"
-        ".android"
-        ".gradle"
-        ".m2"
         { directory = ".gnupg"; mode = "0700"; }
         { directory = ".ssh"; mode = "0700"; }
       ];
@@ -285,7 +281,6 @@
     extraPortals = [
       pkgs.xdg-desktop-portal-hyprland
       pkgs.xdg-desktop-portal-gtk
-      pkgs.xdg-desktop-portal-gnome
     ];
     config = {
       common = {
@@ -298,7 +293,6 @@
       # and libadwaita apps (Ptyxis etc.) always see light mode.
       hyprland = {
         default = [ "hyprland" "gtk" ];
-        "org.freedesktop.impl.portal.OpenURI" = "gnome";
       };
     };
   };
