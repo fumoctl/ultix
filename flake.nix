@@ -20,18 +20,18 @@
     };
     nur = {
       url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     noctalia = {
       url = "github:noctalia-dev/noctalia";
     };
+    lsfg-vk = {
+      url = "github:Daaboulex/lsfg-vk-nix";
+    };
     github-copilot-nix = {
       url = "github:fumoctl/GithubCopilot-Nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     antigravity-nix = {
       url = "github:jacopone/antigravity-nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
 

@@ -45,6 +45,7 @@
     })
     inputs.github-copilot-nix.overlays.default
     inputs.antigravity-nix.overlays.default
+    inputs.lsfg-vk.overlays.default
   ];
 
   boot = {
@@ -363,7 +364,7 @@
     enable = true;
     enable32Bit = true;
     extraPackages = [
-      pkgs.unstable.lsfg-vk
+      
     ];
   };
   services.xserver.enable = true;
@@ -533,8 +534,8 @@
     lact
     mangohud
     goverlay
-    unstable.lsfg-vk-ui
     mesa-demos
+    lsfg-vk
 
     # Productivity & Daily Applications
     unstable.equibop
