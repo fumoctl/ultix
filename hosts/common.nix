@@ -384,40 +384,8 @@
   };
   hardware.steam-hardware.enable = true;
 
-  # --- Virtualisation, Containers & Flatpak ---
+  # --- Virtualisation & Flatpak (containers live in containers.nix) ---
   virtualisation = {
-    docker = {
-      enable = true;
-      autoPrune.enable = true;
-    };
-    podman = {
-      enable = true;
-      dockerCompat = false;
-      dockerSocket.enable = false;
-      defaultNetwork.settings.dns_enabled = true;
-    };
-    containers.storage.settings = {
-      storage = {
-        driver = "overlay";
-      };
-    };
-    oci-containers = {
-      backend = "podman";
-      containers = {
-        postgres = {
-          image = "docker.io/library/postgres:16";
-          autoStart = false;
-          podman.user = "fumoctl";
-          ports = [ "5432:5432" ];
-          environment = {
-            POSTGRES_PASSWORD = "postgres";
-          };
-          volumes = [
-            "postgres-data:/var/lib/postgresql/data:Z"
-          ];
-        };
-      };
-    };
     libvirtd = {
       enable = true;
       qemu = {
@@ -506,18 +474,7 @@
     libsecret
     seahorse
 
-    # Container Orchestration & K8s
-    docker-compose
-    podman-compose
-    podman-desktop
-    kind
-    kubectl
-    helm
-    k9s
-    skopeo
-    dive
-    shadow
-    fuse-overlayfs
+    # Container Orchestration & K8s tooling lives in hosts/containers.nix
 
     # Wayland & Desktop Integration
     wl-clipboard
