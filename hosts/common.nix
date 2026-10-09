@@ -35,12 +35,18 @@
     ];
   };
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    android_sdk.accept_license = true;
+  };
   nixpkgs.overlays = [
     (final: prev: {
       unstable = import inputs.nixpkgs-unstable {
         system = prev.stdenv.hostPlatform.system;
-        config.allowUnfree = true;
+        config = {
+          allowUnfree = true;
+          android_sdk.accept_license = true;
+        };
       };
     })
     inputs.github-copilot-nix.overlays.default
@@ -163,6 +169,9 @@
         ".copilot"
         ".steam"
         ".gemini"
+        "Android"
+        ".android"
+        ".gradle"
         ".m2"
         { directory = ".gnupg"; mode = "0700"; }
         { directory = ".ssh"; mode = "0700"; }
@@ -508,6 +517,7 @@
     google-antigravity-cli
     github-copilot-desktop
     github-copilot-cli
+    unstable.android-studio-full
 
     # Network Utilities
     dnsmasq
