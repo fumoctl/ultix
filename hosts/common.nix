@@ -462,8 +462,6 @@
     github-copilot-desktop
     github-copilot-cli
     unstable.android-studio
-    unstable.flutter
-    unstable.dart
 
     # File Management & Media Openers
     thunar
