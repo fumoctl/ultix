@@ -455,6 +455,15 @@
     neovim
     git
     meld
+    distrobox
+    google-antigravity
+    google-antigravity-cli
+    unstable.google-chrome
+    github-copilot-desktop
+    github-copilot-cli
+    unstable.android-studio
+    unstable.flutter
+    unstable.dart
 
     # File Management & Media Openers
     thunar
@@ -485,8 +494,6 @@
     libsecret
     seahorse
 
-    # Container Orchestration & K8s tooling lives in hosts/containers.nix
-
     # Wayland & Desktop Integration
     wl-clipboard
     wl-mirror
@@ -511,13 +518,7 @@
     unstable.onlyoffice-desktopeditors
     unstable.mullvad-browser
     mpv
-    distrobox
     appimage-run
-    google-antigravity
-    google-antigravity-cli
-    github-copilot-desktop
-    github-copilot-cli
-    unstable.android-studio-full
 
     # Network Utilities
     dnsmasq
