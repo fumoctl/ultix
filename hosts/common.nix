@@ -169,10 +169,13 @@
         ".copilot"
         ".steam"
         ".gemini"
+        ".m2"
+        # Android-Studio
+        ".config/Google"
+        ".local/share/Google"
         "Android"
         ".android"
         ".gradle"
-        ".m2"
         { directory = ".gnupg"; mode = "0700"; }
         { directory = ".ssh"; mode = "0700"; }
       ];
