@@ -222,8 +222,8 @@
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.ly.enableGnomeKeyring = true;
 
-  time.timeZone = lib.mkDefault "America/Sao_Paulo";
-  services.automatic-timezoned.enable = true;
+  services.tzupdate.enable = true;
+  time.timeZone = lib.mkDefault "America/Argentina/Buenos_Aires";
 
   i18n = {
     defaultLocale = lib.mkDefault "en_US.UTF-8";
