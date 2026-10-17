@@ -170,11 +170,6 @@
         ".steam"
         ".gemini"
         ".m2"
-        # Android-Studio
-        ".config/Google"
-        ".local/share/Google"
-        "Android"
-        ".android"
         ".gradle"
         { directory = ".gnupg"; mode = "0700"; }
         { directory = ".ssh"; mode = "0700"; }
@@ -503,7 +498,6 @@
     unstable.google-chrome
     github-copilot-desktop
     github-copilot-cli
-    unstable.android-studio
 
     # File Management & Media Openers
     thunar
