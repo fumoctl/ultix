@@ -154,6 +154,7 @@
         ".config/xfce4"
         ".config/AmneziaVPN.ORG"
         ".config/Podman Desktop"
+        ".config/.android"
         ".local/share/Steam"
         ".local/share/containers"
         ".local/share/direnv"

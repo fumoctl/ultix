@@ -9,6 +9,7 @@
   imports = [
     ../common.nix
     ../containers.nix
+    ../android.nix
     ./containers.nix
     ./hardware-configuration.nix
     ./disko.nix
