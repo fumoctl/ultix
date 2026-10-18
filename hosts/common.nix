@@ -161,9 +161,14 @@
         ".local/share/flatpak"
         ".local/share/keyrings"
         ".local/share/Trash"
+        ".local/share/uv"
         ".local/state/noctalia"
-        ".thunderbird"
+        ".local/bin"
+        ".cache/bun"
+        ".cache/uv"
+        ".cache/ms-playwright"
         ".var/app"
+        ".thunderbird"
         ".vscode"
         ".vscode-shared"
         ".duckdb"
@@ -173,6 +178,7 @@
         ".m2"
         ".gradle"
         ".android"
+        ".bun"
         { directory = ".gnupg"; mode = "0700"; }
         { directory = ".ssh"; mode = "0700"; }
       ];
@@ -482,7 +488,93 @@
     pinentryPackage = pkgs.pinentry-all;
   };
 
-  programs.nix-ld.enable = true;
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      # Core C/C++ runtimes & compilers
+      stdenv.cc.cc.lib
+      gcc.cc.lib
+      glibc
+      zlib
+      systemd
+
+      # Compression, system, and network utilities
+      bzip2
+      curl
+      expat
+      libxml2
+      openssl
+      util-linux
+      e2fsprogs
+
+      # Graphics & hardware rendering (host GPU / Vulkan / Direct Rendering)
+      libGL
+      libglvnd
+      vulkan-loader
+      mesa
+      libdrm
+      libva
+      pciutils
+      libepoxy
+
+      # Image codecs (prevents emulator QEMU crashes)
+      libpng
+      libjpeg
+      libwebp
+
+      # BSD compatibility
+      libbsd
+
+      # Audio output (needed for emulator guest sound)
+      alsa-lib
+      pulseaudio
+      libpulseaudio
+
+      # X11 Session Management & Core X11 client libraries
+      libsm
+      libice
+      libx11
+      libxcb
+      libxcomposite
+      libxcursor
+      libxdamage
+      libxext
+      libxfixes
+      libxi
+      libxinerama
+      libxrandr
+      libxrender
+      libxtst
+      libxshmfence
+
+      # Qt 6.5+ XCB utility plugins (resolves GUI startup aborts)
+      libxcb-cursor
+      libxcb-image
+      libxcb-keysyms
+      libxcb-render-util
+      libxcb-wm
+
+      # Keyboard & Wayland handling (needed by Qt and Flutter)
+      libxkbcommon
+      libxkbfile
+      wayland
+
+      # Desktop integration, GTK3 & font rendering (required for Flutter engine)
+      gtk3
+      glib
+      cairo
+      pango
+      atk
+      gdk-pixbuf
+      harfbuzz
+      fontconfig
+      freetype
+      nspr
+      nss
+      dbus
+      cups
+    ];
+  };
 
   documentation.man.cache.enable = true;
 
@@ -491,6 +583,10 @@
     nixd
     nixpkgs-fmt
     nixfmt
+    python3
+    uv
+    jdk
+    bun
     neovim
     git
     meld
