@@ -33,6 +33,9 @@
     antigravity-nix = {
       url = "github:jacopone/antigravity-nix";
     };
+    nix-alien = {
+      url = "github:thiagokokada/nix-alien";
+    };
   };
 
   nixConfig = {

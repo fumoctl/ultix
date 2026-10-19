@@ -583,10 +583,7 @@
     nixd
     nixpkgs-fmt
     nixfmt
-    python3
-    uv
-    jdk
-    bun
+    inputs.nix-alien.packages.${pkgs.system}.nix-alien
     neovim
     git
     meld
