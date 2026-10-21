@@ -155,6 +155,7 @@
         ".config/AmneziaVPN.ORG"
         ".config/Podman Desktop"
         ".config/.android"
+        ".config/JetBrains"
         ".local/share/Steam"
         ".local/share/containers"
         ".local/share/direnv"
@@ -162,11 +163,13 @@
         ".local/share/keyrings"
         ".local/share/Trash"
         ".local/share/uv"
+        ".local/share/JetBrains"
         ".local/state/noctalia"
         ".local/bin"
         ".cache/bun"
         ".cache/uv"
         ".cache/ms-playwright"
+        ".cache/JetBrains"
         ".var/app"
         ".thunderbird"
         ".vscode"
@@ -179,6 +182,10 @@
         ".gradle"
         ".android"
         ".bun"
+        ".java"
+        ".cargo"
+        ".rustup"
+
         { directory = ".gnupg"; mode = "0700"; }
         { directory = ".ssh"; mode = "0700"; }
       ];
@@ -497,6 +504,7 @@
       glibc
       zlib
       systemd
+      ncurses5
 
       # Compression, system, and network utilities
       bzip2
@@ -593,6 +601,15 @@
     unstable.google-chrome
     github-copilot-desktop
     github-copilot-cli
+    unstable.jetbrains.idea
+    python3
+    jdk
+    uv
+    bun
+    rustup
+    gcc
+    pkg-config
+    gnumake
 
     # File Management & Media Openers
     thunar
