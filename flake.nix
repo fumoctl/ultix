@@ -33,6 +33,10 @@
     antigravity-nix = {
       url = "github:jacopone/antigravity-nix";
     };
+    abacusai-nix = {
+      url = "github:fumoctl/AbacusAI-Nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-alien = {
       url = "github:thiagokokada/nix-alien";
     };

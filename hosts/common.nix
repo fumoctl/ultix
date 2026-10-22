@@ -49,6 +49,7 @@
         };
       };
     })
+    inputs.abacusai-nix.overlays.default
     inputs.github-copilot-nix.overlays.default
     inputs.antigravity-nix.overlays.default
     inputs.lsfg-vk.overlays.default
@@ -155,6 +156,8 @@
         ".config/AmneziaVPN.ORG"
         ".config/Podman Desktop"
         ".config/.android"
+        ".config/AbacusAI Desktop"
+        ".config/abacusai-cli-nodejs"
         ".local/share/Steam"
         ".local/share/containers"
         ".local/share/direnv"
@@ -175,6 +178,7 @@
         ".copilot"
         ".steam"
         ".gemini"
+        ".abacusai"
         ".m2"
         ".gradle"
         ".android"
@@ -597,6 +601,8 @@
     unstable.google-chrome
     github-copilot-desktop
     github-copilot-cli
+    abacusai-desktop
+    abacusai-cli
 
     # File Management & Media Openers
     thunar
