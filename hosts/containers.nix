@@ -57,13 +57,7 @@
           autoStart = false;
           podman.user = "fumoctl";
           cmd = [ "bin/yugabyted" "start" "--daemon=false" "--advertise_address=127.0.0.1" ];
-          ports = [
-            "5433:5433"   # YSQL (PostgreSQL-compatible port)
-            "7000:7000"   # YB-Master Admin UI
-            "9000:9000"   # YB-TServer Admin UI
-            "9042:9042"   # YCQL (Cassandra-compatible port, optional)
-            "15433:15433" # YugabyteDB Unified Admin UI
-          ];
+          extraOptions = [ "--network=host" ];
           volumes = [
             "yugabyte-data:/home/yugabyte/var:Z"
           ];
