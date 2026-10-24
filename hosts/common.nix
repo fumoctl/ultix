@@ -50,7 +50,6 @@
       };
     })
     inputs.lsfg-vk.overlays.default
-    inputs.abacusai-nix.overlays.default
   ];
 
   boot = {
@@ -155,8 +154,6 @@
         ".config/AmneziaVPN.ORG"
         ".config/Podman Desktop"
         ".config/.android"
-        ".config/AbacusAI Desktop"
-        ".config/abacusai-cli-nodejs"
         ".local/share/Steam"
         ".local/share/containers"
         ".local/share/direnv"
@@ -164,11 +161,13 @@
         ".local/share/keyrings"
         ".local/share/Trash"
         ".local/share/uv"
+        ".local/share/dsh"
         ".local/state/noctalia"
         ".local/bin"
         ".cache/bun"
         ".cache/uv"
         ".cache/ms-playwright"
+        ".cache/dsh"
         ".var/app"
         ".thunderbird"
         ".vscode"
@@ -177,7 +176,7 @@
         ".vscode-oss-shared"
         ".duckdb"
         ".copilot"
-        ".abacusai"
+        ".dsh"
         ".steam"
         ".gemini"
         ".m2"
@@ -597,9 +596,8 @@
     git
     meld
     distrobox
+    python3
     unstable.google-chrome
-    abacusai-desktop
-    abacusai-cli
 
     # File Management & Media Openers
     thunar

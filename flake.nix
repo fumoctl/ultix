@@ -30,10 +30,6 @@
     nix-alien = {
       url = "github:thiagokokada/nix-alien";
     };
-    abacusai-nix = {
-      url = "github:fumoctl/AbacusAI-Nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   nixConfig = {
