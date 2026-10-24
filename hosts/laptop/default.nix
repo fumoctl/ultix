@@ -25,14 +25,7 @@
     secureBoot.enable = lib.mkDefault false;
   };
 
-  boot.kernelPackages = lib.mkDefault (
-    if pkgs ? linuxPackages_cachyos-lto-znver4 then
-      pkgs.linuxPackages_cachyos-lto-znver4.extend (final: prev: {
-        tuxedo-drivers = prev.tuxedo-drivers.override { pahole = pkgs.pahole; };
-      })
-    else
-      pkgs.linuxPackages_latest
-  );
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
 
   # NVIDIA PRIME hybrid graphics
   boot.initrd.kernelModules = [ "amdgpu" ];
@@ -44,12 +37,6 @@
   hardware.nvidia = {
     modesetting.enable = true;
     open = true;
-    package = lib.mkDefault (
-      if pkgs ? nvidia_cachyos-lto then
-        pkgs.nvidia_cachyos-lto
-      else
-        config.boot.kernelPackages.nvidiaPackages.stable
-    );
     powerManagement.enable = true;
     powerManagement.finegrained = true;
     nvidiaSettings = true;
