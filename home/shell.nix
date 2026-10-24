@@ -132,9 +132,7 @@
         plugins = [
           "@deepseek-ai/dsh-base"
           "@deepseek-ai/dsh-web-app"
-          "@nonamelego/dsh-catppuccin@0.6.2"
         ];
-        specsHash = "sha256-Ophk7VuohWNwRSsX+9ktMVFwA9JFXuumvnKdzqcAhgE=";
         userPatches = mcpPatches;
       };
       # Terminal UI (https://github.com/ccch1mneyyy/dsh-TUI, npm @deepseek-harness-tui/dsh-tui).
