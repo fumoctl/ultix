@@ -132,6 +132,7 @@
         plugins = [
           "@deepseek-ai/dsh-base"
           "@deepseek-ai/dsh-web-app"
+          "@nonamelego/dsh-catppuccin@0.6.2"
         ];
         userPatches = mcpPatches;
       };
