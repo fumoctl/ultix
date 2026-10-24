@@ -49,10 +49,8 @@
         };
       };
     })
-    inputs.abacusai-nix.overlays.default
-    inputs.github-copilot-nix.overlays.default
-    inputs.antigravity-nix.overlays.default
     inputs.lsfg-vk.overlays.default
+    inputs.abacusai-nix.overlays.default
   ];
 
   boot = {
@@ -144,6 +142,7 @@
         "Games"
         ".config/BraveSoftware"
         ".config/Code"
+        ".config/VSCodium"
         ".config/equibop"
         ".config/dconf"
         ".config/gh"
@@ -173,12 +172,14 @@
         ".var/app"
         ".thunderbird"
         ".vscode"
+        ".vscode-oss"
         ".vscode-shared"
+        ".vscode-oss-shared"
         ".duckdb"
         ".copilot"
+        ".abacusai"
         ".steam"
         ".gemini"
-        ".abacusai"
         ".m2"
         ".gradle"
         ".android"
@@ -591,16 +592,12 @@
     nixd
     nixpkgs-fmt
     nixfmt
-    inputs.nix-alien.packages.${pkgs.system}.nix-alien
+    inputs.nix-alien.packages.${pkgs.stdenv.hostPlatform.system}.nix-alien
     neovim
     git
     meld
     distrobox
-    google-antigravity
-    google-antigravity-cli
     unstable.google-chrome
-    github-copilot-desktop
-    github-copilot-cli
     abacusai-desktop
     abacusai-cli
 

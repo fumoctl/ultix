@@ -27,18 +27,12 @@
     lsfg-vk = {
       url = "github:Daaboulex/lsfg-vk-nix";
     };
-    github-copilot-nix = {
-      url = "github:fumoctl/GithubCopilot-Nix";
-    };
-    antigravity-nix = {
-      url = "github:jacopone/antigravity-nix";
+    nix-alien = {
+      url = "github:thiagokokada/nix-alien";
     };
     abacusai-nix = {
       url = "github:fumoctl/AbacusAI-Nix";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nix-alien = {
-      url = "github:thiagokokada/nix-alien";
     };
   };
 

@@ -73,10 +73,9 @@
     };
   };
 
-  # Visual Studio Code
-  programs.vscode = {
+  # VSCodium
+  programs.vscodium = {
     enable = true;
-    package = pkgs.vscode;
     mutableExtensionsDir = true;
   };
 
@@ -163,50 +162,50 @@
       "x-scheme-handler/https" = "brave-browser.desktop";
       "x-scheme-handler/mailto" = "thunderbird.desktop";
 
-      "text/plain" = "code.desktop";
-      "text/markdown" = "code.desktop";
-      "text/x-markdown" = "code.desktop";
+      "text/plain" = "codium.desktop";
+      "text/markdown" = "codium.desktop";
+      "text/x-markdown" = "codium.desktop";
 
-      "application/json" = "code.desktop";
-      "application/x-yaml" = "code.desktop";
-      "text/yaml" = "code.desktop";
-      "text/x-yaml" = "code.desktop";
-      "application/toml" = "code.desktop";
-      "text/x-toml" = "code.desktop";
-      "application/xml" = "code.desktop";
-      "text/xml" = "code.desktop";
-      "text/x-ini" = "code.desktop";
-      "text/x-properties" = "code.desktop";
+      "application/json" = "codium.desktop";
+      "application/x-yaml" = "codium.desktop";
+      "text/yaml" = "codium.desktop";
+      "text/x-yaml" = "codium.desktop";
+      "application/toml" = "codium.desktop";
+      "text/x-toml" = "codium.desktop";
+      "application/xml" = "codium.desktop";
+      "text/xml" = "codium.desktop";
+      "text/x-ini" = "codium.desktop";
+      "text/x-properties" = "codium.desktop";
 
-      "application/x-shellscript" = "code.desktop";
-      "text/x-shellscript" = "code.desktop";
-      "application/x-bash" = "code.desktop";
-      "text/x-python" = "code.desktop";
-      "application/x-python-code" = "code.desktop";
-      "text/x-lua" = "code.desktop";
+      "application/x-shellscript" = "codium.desktop";
+      "text/x-shellscript" = "codium.desktop";
+      "application/x-bash" = "codium.desktop";
+      "text/x-python" = "codium.desktop";
+      "application/x-python-code" = "codium.desktop";
+      "text/x-lua" = "codium.desktop";
 
-      "text/x-c" = "code.desktop";
-      "text/x-csrc" = "code.desktop";
-      "text/x-chdr" = "code.desktop";
-      "text/x-c++" = "code.desktop";
-      "text/x-c++src" = "code.desktop";
-      "text/x-c++hdr" = "code.desktop";
-      "text/x-rust" = "code.desktop";
-      "text/rust" = "code.desktop";
-      "text/x-go" = "code.desktop";
-      "text/javascript" = "code.desktop";
-      "application/javascript" = "code.desktop";
-      "text/typescript" = "code.desktop";
-      "application/typescript" = "code.desktop";
-      "text/css" = "code.desktop";
-      "text/x-scss" = "code.desktop";
-      "text/x-sql" = "code.desktop";
+      "text/x-c" = "codium.desktop";
+      "text/x-csrc" = "codium.desktop";
+      "text/x-chdr" = "codium.desktop";
+      "text/x-c++" = "codium.desktop";
+      "text/x-c++src" = "codium.desktop";
+      "text/x-c++hdr" = "codium.desktop";
+      "text/x-rust" = "codium.desktop";
+      "text/rust" = "codium.desktop";
+      "text/x-go" = "codium.desktop";
+      "text/javascript" = "codium.desktop";
+      "application/javascript" = "codium.desktop";
+      "text/typescript" = "codium.desktop";
+      "application/typescript" = "codium.desktop";
+      "text/css" = "codium.desktop";
+      "text/x-scss" = "codium.desktop";
+      "text/x-sql" = "codium.desktop";
 
-      "text/x-diff" = "code.desktop";
-      "text/x-patch" = "code.desktop";
-      "text/x-dockerfile" = "code.desktop";
-      "text/x-makefile" = "code.desktop";
-      "text/x-cmake" = "code.desktop";
+      "text/x-diff" = "codium.desktop";
+      "text/x-patch" = "codium.desktop";
+      "text/x-dockerfile" = "codium.desktop";
+      "text/x-makefile" = "codium.desktop";
+      "text/x-cmake" = "codium.desktop";
 
       "inode/directory" = "Thunar.desktop";
 
