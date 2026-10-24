@@ -31,7 +31,7 @@
       url = "github:thiagokokada/nix-alien";
     };
     dsh-nix = {
-      url = "github:Samuka007/dsh-nix";
+      url = "github:fumoctl/dsh-nix";
     };
   };
 

@@ -177,6 +177,8 @@
         ".duckdb"
         ".copilot"
         ".dsh"
+        ".dsh-tui"
+        ".agents"
         ".steam"
         ".gemini"
         ".m2"
