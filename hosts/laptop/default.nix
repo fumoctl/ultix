@@ -25,7 +25,7 @@
     secureBoot.enable = lib.mkDefault false;
   };
 
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
+  boot.kernelPackages = pkgs.linuxPackages
 
   # NVIDIA PRIME hybrid graphics
   boot.initrd.kernelModules = [ "amdgpu" ];
