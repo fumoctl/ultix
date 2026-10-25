@@ -7,7 +7,6 @@
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
@@ -16,7 +15,6 @@
     };
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     nur = {
       url = "github:nix-community/NUR";
@@ -30,8 +28,8 @@
     nix-alien = {
       url = "github:thiagokokada/nix-alien";
     };
-    dsh-nix = {
-      url = "github:fumoctl/dsh-nix";
+    omp = {
+      url = "github:can1357/oh-my-pi";
     };
   };
 

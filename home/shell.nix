@@ -8,7 +8,7 @@
 
 {
   imports = [
-    inputs.dsh-nix.homeManagerModules.dsh
+    inputs.omp.homeManagerModules.default
     ];
 
   home.packages = with pkgs; [
@@ -84,107 +84,41 @@
     mutableExtensionsDir = true;
   };
 
-  # DeepSeek Harness (dsh)
-  # @deepseek-ai/dsh-mcp-client is bundled with dsh, so it is enabled through
-  # `userPatches` (one entry per MCP server) rather than `plugins`.
-  programs.dsh =
-    let
-      mcpPatches = [
-        {
-          insert = [
-            {
-              # DBCode's CLI lives in the (mutable) VSCodium extension dir; pick the newest installed version.
-              id = "mcp-dbcode";
-              name = "@deepseek-ai/dsh-mcp-client";
-              config = {
-                serverName = "dbcode";
-                transport = "stdio";
-                command = "${pkgs.bash}/bin/bash";
-                args = [
-                  "-c"
-                  ''exec ${pkgs.nodejs}/bin/node "$(ls -d "$HOME"/.vscode-oss/extensions/dbcode.dbcode-*/out/cli/dbcode | sort -V | tail -n1)" mcp''
-                ];
-              };
-            }
-            {
-              id = "mcp-rivalsearch";
-              name = "@deepseek-ai/dsh-mcp-client";
-              config = {
-                serverName = "rivalsearch";
-                transport = "streamable-http";
-                url = "https://RivalSearchMCP.fastmcp.app/mcp";
-              };
-            }
-          ];
-        }
-      ];
-    in
-    {
-      enable = true;
-      profiles.headless = {
-        plugins = [
-          "@deepseek-ai/dsh-base"
-          "@deepseek-ai/dsh-headless"
+  # "Oh My Pi" Ai Harness
+  programs.omp = {
+    enable = true;
+  };
+  home.file.".omp/agent/models.yml".source =
+    (pkgs.formats.yaml { }).generate "models.yml" {
+      providers.abacusai = {
+        baseUrl = "https://routellm.abacus.ai/v1";
+        api = "openai-completions";
+        apiKey = "ABACUSAI_API_KEY"; # env var name; falls back to the literal string
+        models = [
+          {
+            id = "deepseek-ai/DeepSeek-V4.1-Flash-1017";
+            name = "DeepSeek-V4.1-Flash";
+            reasoning = true; # required to enable thinking controls
+            thinking = {
+              mode = "effort";
+              efforts = [ "low" "high" "max" ]; # ordered list of supported levels
+              defaultLevel = "low";
+            };
+          }
+          {
+            id = "moonshotai/Kimi-K3.1-Pro";
+            name = "Kimi-K3.1-Pro";
+            reasoning = true;
+            thinking = {
+              mode = "effort";
+              efforts = [ "low" "high" "max" ];
+              defaultLevel = "low";
+            };
+          }
         ];
-        userPatches = mcpPatches;
-      };
-      profiles.web = {
-        plugins = [
-          "@deepseek-ai/dsh-base"
-          "@deepseek-ai/dsh-web-app"
-        ];
-        userPatches = mcpPatches;
-      };
-      # Terminal UI (https://github.com/ccch1mneyyy/dsh-TUI, npm @deepseek-harness-tui/dsh-tui).
-      # Run with `dsh --profile tui`. Resolved from npm at build time, pinned by specsHash.
-      profiles.tui = {
-        plugins = [
-          "@deepseek-ai/dsh-base"
-          "@deepseek-harness-tui/dsh-tui@0.16.1"
-        ];
-        specsHash = "sha256-KqSShSzXYsDVLY05tNl2mz/MDTl2Hxzs5m53V/l19+8=";
-        userPatches = mcpPatches;
       };
     };
-
-  xdg.desktopEntries.dsh-web = {
-    name = "DeepSeek Harness Web";
-    genericName = "AI Coding Agent";
-    comment = "Launch the DeepSeek Harness Web UI";
-    icon = "${config.programs.dsh.package}/apps/desktop/resources/icon.svg";
-    terminal = false;
-    categories = [
-      "Development"
-      "Utility"
-    ];
-    exec = toString (
-      pkgs.writeShellScript "dsh-web-launch" ''
-        runtime_dir="''${XDG_RUNTIME_DIR:-/tmp}"
-        pid_file="$runtime_dir/dsh-web.pid"
-        url_file="$runtime_dir/dsh-web.url"
-
-        if [ -s "$pid_file" ] && kill -0 "$(cat "$pid_file")" 2>/dev/null && [ -s "$url_file" ]; then
-          exec ${pkgs.xdg-utils}/bin/xdg-open "$(cat "$url_file")"
-        fi
-
-        ${pkgs.procps}/bin/pkill -u "$USER" -f 'apps/cli/lib/bin\.js --profile web' 2>/dev/null || true
-        rm -f "$pid_file" "$url_file"
-
-        umask 077
-        printf '%s\n' "$$" > "$pid_file"
-        exec ${config.programs.dsh.package}/bin/dsh --profile web > >(
-          while IFS= read -r line; do
-            case "$line" in
-              "dsh web: http"*)
-                umask 077
-                printf '%s\n' "''${line#dsh web: }" > "$url_file"
-                ;;
-            esac
-          done
-        )
-      ''
-    );
-  };
+  home.sessionVariables.ABACUSAI_API_KEY = "s2_31a5a638ecafsdgasdgzdgdfgdzfgadrasdasdadasdaf1";
 
   # Brave Browser with privacy and utility extensions
   programs.brave = {
