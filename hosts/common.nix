@@ -602,7 +602,6 @@
     unstable.google-chrome
 
     # File Management & Media Openers
-    thunar
     xarchiver
     icoextract
     kdePackages.gwenview
@@ -610,6 +609,7 @@
     kdePackages.okular
     zip
     unzip
+    kdePackages.ark
 
     # System & CLI Utilities
     fastfetch
