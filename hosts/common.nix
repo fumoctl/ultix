@@ -591,7 +591,6 @@
   environment.systemPackages = with pkgs; [
     # Development & Editors
     nixd
-    nixpkgs-fmt
     nixfmt
     inputs.nix-alien.packages.${pkgs.stdenv.hostPlatform.system}.nix-alien
     neovim
