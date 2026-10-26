@@ -101,8 +101,12 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     initContent = ''
-      [ -f "${config.sops.templates."shell-secrets.sh".path}" ] && source "${config.sops.templates."shell-secrets.sh".path}"
-      if [ -f "${config.sops.secrets."fumopgp.key".path}" ] && ! gpg -K 35FAC098F119E8FA >/dev/null 2>&1; then
+      [ -f "${config.sops.templates."shell-secrets.sh".path}" ] && source "${
+        config.sops.templates."shell-secrets.sh".path
+      }"
+      if [ -f "${
+        config.sops.secrets."fumopgp.key".path
+      }" ] && ! gpg -K 35FAC098F119E8FA >/dev/null 2>&1; then
         gpg --batch --import "${config.sops.secrets."fumopgp.key".path}" >/dev/null 2>&1
         echo "5F3C25D755D3A4321D03FF7135FAC098F119E8FA:6:" | gpg --batch --import-ownertrust >/dev/null 2>&1
       fi
@@ -127,42 +131,75 @@
   programs.omp = {
     enable = true;
   };
-  home.file.".omp/agent/models.yml".source =
-    (pkgs.formats.yaml { }).generate "models.yml" {
-      providers.abacusai = {
-        baseUrl = "https://routellm.abacus.ai/v1";
-        api = "openai-completions";
-        apiKey = "ABACUSAI_API_KEY";
-        models = [
-          {
-            id = "deepseek-ai/DeepSeek-V4.1-Flash-1017";
-            name = "DeepSeek-V4.1-Flash";
-            reasoning = true;
-            thinking = {
-              mode = "effort";
-              efforts = [ "low" "high" "max" ];
-              defaultLevel = "low";
-            };
-            input = [ "text" "image" ];
-            contextWindow = 1047576;
-            maxTokens = 360216;
-          }
-          {
-            id = "moonshotai/Kimi-K3.1-Pro";
-            name = "Kimi-K3.1-Pro";
-            reasoning = true;
-            thinking = {
-              mode = "effort";
-              efforts = [ "low" "high" "max" ];
-              defaultLevel = "low";
-            };
-            input = [ "text" "image" ];
-            contextWindow = 1047576;
-            maxTokens = 130144;
-          }
+  # OMP MCP Config
+  home.file.".omp/agent/mcp.json".source = (pkgs.formats.json { }).generate "omp-mcp.json" {
+    "$schema" =
+      "https://raw.githubusercontent.com/can1357/oh-my-pi/main/packages/coding-agent/src/config/mcp-schema.json";
+    mcpServers = {
+      dbcode = {
+        type = "stdio";
+        command = "${pkgs.bash}/bin/bash";
+        args = [
+          "-c"
+          ''exec ${pkgs.nodejs}/bin/node "$(ls -d "$HOME"/.vscode-oss/extensions/dbcode.dbcode-*/out/cli/dbcode | sort -V | tail -n1)" mcp''
         ];
       };
+      rivalsearch = {
+        type = "http";
+        url = "https://RivalSearchMCP.fastmcp.app/mcp";
+      };
     };
+  };
+  # OMP Model Config
+  home.file.".omp/agent/models.yml".source = (pkgs.formats.yaml { }).generate "models.yml" {
+    providers.abacusai = {
+      baseUrl = "https://routellm.abacus.ai/v1";
+      api = "openai-completions";
+      apiKey = "ABACUSAI_API_KEY";
+      models = [
+        {
+          id = "deepseek-ai/DeepSeek-V4.1-Flash-1017";
+          name = "DeepSeek-V4.1-Flash";
+          reasoning = true;
+          thinking = {
+            mode = "effort";
+            efforts = [
+              "low"
+              "high"
+              "max"
+            ];
+            defaultLevel = "low";
+          };
+          input = [
+            "text"
+            "image"
+          ];
+          contextWindow = 1047576;
+          maxTokens = 360216;
+        }
+        {
+          id = "moonshotai/Kimi-K3.1-Pro";
+          name = "Kimi-K3.1-Pro";
+          reasoning = true;
+          thinking = {
+            mode = "effort";
+            efforts = [
+              "low"
+              "high"
+              "max"
+            ];
+            defaultLevel = "low";
+          };
+          input = [
+            "text"
+            "image"
+          ];
+          contextWindow = 1047576;
+          maxTokens = 130144;
+        }
+      ];
+    };
+  };
 
   # Brave Browser with privacy and utility extensions
   programs.brave = {
