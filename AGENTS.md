@@ -469,6 +469,12 @@ sudo mkdir -p /mnt/persist/passwords
 nix-shell -p mkpasswd --run 'mkpasswd -m sha-512' | sudo tee /mnt/persist/passwords/fumoctl
 sudo chmod 600 /mnt/persist/passwords/fumoctl
 
+sudo mkdir -p /mnt/persist/sops
+sudo nano /mnt/persist/sops/fumosops.key   # paste your AGE-SECRET-KEY-1...
+sudo chown -R 1000:1000 /mnt/persist/sops
+sudo chmod 700 /mnt/persist/sops
+sudo chmod 600 /mnt/persist/sops/fumosops.key
+
 sudo swapon /mnt/.swapvol/swapfile
 sudo mkdir -p /mnt/var/tmp/nix-build
 sudo TMPDIR=/mnt/var/tmp/nix-build nixos-install --flake github:fumoctl/ultix#<hostname>

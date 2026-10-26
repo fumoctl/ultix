@@ -28,7 +28,21 @@
     sudo chmod 600 /mnt/persist/passwords/fumoctl
     ```
 
-5. **Install NixOS**:
+5. **(Optional) Restore SOPS Age master key**:
+
+    If you are setting up your own machine, restore your Age key before installing so private keys decrypt on first boot:
+
+    ```bash
+    sudo mkdir -p /mnt/persist/sops
+    sudo nano /mnt/persist/sops/fumosops.key   # paste your AGE-SECRET-KEY-1...
+    sudo chown -R 1000:1000 /mnt/persist/sops
+    sudo chmod 700 /mnt/persist/sops
+    sudo chmod 600 /mnt/persist/sops/fumosops.key
+    ```
+
+    _Note: If installing without this key, the system still builds and installs completely fine; secrets decryption is skipped automatically._
+
+6. **Install NixOS**:
 
    ```bash
    sudo swapon /mnt/.swapvol/swapfile
@@ -37,7 +51,7 @@
    ```
    (setting tmpdir avoids out of memory errors when building from source)
 
-6. **Reboot**:
+7. **Reboot**:
    ```bash
    reboot
    ```

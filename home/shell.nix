@@ -16,6 +16,7 @@
   sops = {
     age.keyFile = "/persist/sops/fumosops.key";
     defaultSopsFile = ../secrets/secrets.yaml;
+    validateSopsFiles = false;
 
     secrets = {
       "fumossh.key" = {
@@ -33,6 +34,9 @@
     templates."shell-secrets.sh".content = ''
       export ABACUSAI_API_KEY="${config.sops.placeholder.abacusai_api_key}"
     '';
+  };
+  systemd.user.services.sops-nix = {
+    Unit.ConditionPathExists = "/persist/sops/fumosops.key";
   };
   home.sessionVariables.SOPS_AGE_KEY_FILE = "/persist/sops/fumosops.key";
 
