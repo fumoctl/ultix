@@ -587,3 +587,83 @@ A plugin joins the layer list only if its `package.json` declares a patch. Other
 - Verify with `nix flake check` and an evaluate-only build of the host (§14). The `dsh-nix` repo also provides `checks.profile-boot-web` and `checks.profile-boot-headless`, which boot a composed profile inside the Nix sandbox. A broken composition fails `nix build`, not at runtime.
 - The `dsh-nix` input currently has no `nixpkgs.follows` (see the lockfile note in §4); don't add one unless asked. Its default `pkgs.dsh` build needs `fetchPnpmDeps` and `pnpmConfigHook` from nixpkgs.
 - Upstream ships no TUI profile, only `web` and `headless`. `home/shell.nix` defines `profiles.tui` using `@deepseek-harness-tui/dsh-tui@0.16.1`.
+
+---
+
+## 17. Managing secrets with `sops-nix`
+
+Secrets are encrypted using **SOPS** with a post-quantum hybrid Age master key (`mlkem768x25519`, `age1pq1...`).
+- The persistent Age private key lives on disk at `/persist/sops/fumosops.key` (mode `0600`, owned by `fumoctl`).
+- The public key recipient and matching path regexes are declared in `.sops.yaml`.
+- The encrypted secrets file is `secrets/secrets.yaml`.
+- `SOPS_AGE_KEY_FILE` is set to `/persist/sops/fumosops.key` in `home.sessionVariables`.
+- Secrets wiring and permissions are configured under `sops` in `home/shell.nix`.
+- `systemd.user.services.sops-nix` has `ConditionPathExists = "/persist/sops/fumosops.key"`, so systems without this key build and activate cleanly while simply skipping secret decryption.
+
+### Common workflows
+
+#### 1. Edit secrets interactively in your editor
+Opens `secrets/secrets.yaml` in `$EDITOR` (e.g. Neovim), decrypting it into a temporary buffer in memory. On save/quit (`:wq`), SOPS automatically re-encrypts the file and updates its MAC:
+```bash
+sops secrets/secrets.yaml
+```
+
+#### 2. Decrypt and re-encrypt in place (e.g. to edit in GUI editors like VSCodium)
+If you want to view or edit the plaintext directly in an external editor:
+```bash
+# Decrypt in-place (turns ENC[...] into plaintext)
+sops --decrypt --in-place secrets/secrets.yaml
+
+# ... make your edits in VSCodium and save ...
+
+# Re-encrypt in-place (re-encrypts values and recalculates MAC)
+sops --encrypt --in-place secrets/secrets.yaml
+```
+> **IMPORTANT**: NEVER commit `secrets/secrets.yaml` while it is decrypted. Always inspect `git diff secrets/secrets.yaml` before committing to ensure all values show `ENC[AES256_GCM,...]`.
+
+#### 3. View decrypted content in the terminal without modifying
+```bash
+sops --decrypt secrets/secrets.yaml
+# Or inspect a single key:
+sops --extract '["abacusai_api_key"]' secrets/secrets.yaml
+```
+
+#### 4. Adding a new secret
+
+1. Open the file with `sops secrets/secrets.yaml` and add the new key:
+   ```yaml
+   my_new_token: super_secret_value
+   ```
+   Save and exit to encrypt it.
+
+2. Declare the secret in `home/shell.nix` under `sops.secrets`:
+   ```nix
+   sops.secrets."my_new_token" = {
+     mode = "0600";
+     # path = "${config.home.homeDirectory}/.config/my-app/token"; # optional target path
+   };
+   ```
+
+3. Exposing it to programs:
+   - **As an environment variable**: Add it to `sops.templates."shell-secrets.sh".content` in `home/shell.nix`:
+     ```nix
+     sops.templates."shell-secrets.sh".content = ''
+       export ABACUSAI_API_KEY="${config.sops.placeholder.abacusai_api_key}"
+       export MY_NEW_TOKEN="${config.sops.placeholder.my_new_token}"
+     '';
+     ```
+     *(This is automatically sourced by `programs.zsh.initContent`)*.
+   - **As a file path**: Decrypted secret files are automatically symlinked or placed at `${config.sops.secrets."my_new_token".path}` (defaults to `~/.config/sops-nix/secrets/my_new_token`).
+
+4. Stage and rebuild:
+   ```bash
+   git add secrets/secrets.yaml home/shell.nix
+   sudo nixos-rebuild switch --flake .#<hostname>
+   ```
+
+#### 5. Rotating or changing the Age master key
+To add a new key recipient (or re-key the file after changing `.sops.yaml`):
+```bash
+# Update .sops.yaml with the new recipient public key, then re-wrap the data keys:
+sops updatekeys secrets/secrets.yaml
+```
