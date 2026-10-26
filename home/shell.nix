@@ -8,7 +8,6 @@
 
 {
   imports = [
-    inputs.omp.homeManagerModules.default
     inputs.sops-nix.homeManagerModules.sops
   ];
 
@@ -127,17 +126,11 @@
     mutableExtensionsDir = true;
   };
 
-  # "Oh My Pi" Ai Harness
-  programs.omp = {
-    enable = true;
-  };
-  # OMP MCP Config
-  home.file.".omp/agent/mcp.json".source = (pkgs.formats.json { }).generate "omp-mcp.json" {
-    "$schema" =
-      "https://raw.githubusercontent.com/can1357/oh-my-pi/main/packages/coding-agent/src/config/mcp-schema.json";
+  # Antigravity MCP Config
+  home.file.".gemini/config/mcp_config.json".source =
+  (pkgs.formats.json { }).generate "antigravity-mcp.json" {
     mcpServers = {
       dbcode = {
-        type = "stdio";
         command = "${pkgs.bash}/bin/bash";
         args = [
           "-c"
@@ -145,59 +138,8 @@
         ];
       };
       rivalsearch = {
-        type = "http";
-        url = "https://RivalSearchMCP.fastmcp.app/mcp";
+        serverUrl = "https://RivalSearchMCP.fastmcp.app/mcp";
       };
-    };
-  };
-  # OMP Model Config
-  home.file.".omp/agent/models.yml".source = (pkgs.formats.yaml { }).generate "models.yml" {
-    providers.abacusai = {
-      baseUrl = "https://routellm.abacus.ai/v1";
-      api = "openai-completions";
-      apiKey = "ABACUSAI_API_KEY";
-      models = [
-        {
-          id = "deepseek-ai/DeepSeek-V4.1-Flash-1017";
-          name = "DeepSeek-V4.1-Flash";
-          reasoning = true;
-          thinking = {
-            mode = "effort";
-            efforts = [
-              "low"
-              "high"
-              "max"
-            ];
-            defaultLevel = "low";
-          };
-          input = [
-            "text"
-            "image"
-          ];
-          contextWindow = 1047576;
-          maxTokens = 360216;
-        }
-        {
-          id = "moonshotai/Kimi-K3.1-Pro";
-          name = "Kimi-K3.1-Pro";
-          reasoning = true;
-          thinking = {
-            mode = "effort";
-            efforts = [
-              "low"
-              "high"
-              "max"
-            ];
-            defaultLevel = "low";
-          };
-          input = [
-            "text"
-            "image"
-          ];
-          contextWindow = 1047576;
-          maxTokens = 130144;
-        }
-      ];
     };
   };
 

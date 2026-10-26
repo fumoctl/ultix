@@ -32,8 +32,8 @@
     nix-alien = {
       url = "github:thiagokokada/nix-alien";
     };
-    omp = {
-      url = "github:can1357/oh-my-pi";
+    antigravity-nix = {
+      url = "github:jacopone/antigravity-nix";
     };
   };
 

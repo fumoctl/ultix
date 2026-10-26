@@ -50,6 +50,7 @@
       };
     })
     inputs.lsfg-vk.overlays.default
+    inputs.antigravity-nix.overlays.default
   ];
 
   boot = {
@@ -172,7 +173,6 @@
         ".vscode-shared"
         ".vscode-oss-shared"
         ".duckdb"
-        ".omp"
         ".agents"
         ".steam"
         ".gemini"
@@ -593,6 +593,8 @@
     meld
     distrobox
     python3
+    google-antigravity
+    google-antigravity-cli
     unstable.google-chrome
 
     # File Management & Media Openers
