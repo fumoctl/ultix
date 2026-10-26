@@ -9,9 +9,37 @@
 {
   imports = [
     inputs.omp.homeManagerModules.default
-    ];
+    inputs.sops-nix.homeManagerModules.sops
+  ];
+
+  # --- SOPS Secrets ---
+  sops = {
+    age.keyFile = "/persist/sops/fumosops.key";
+    defaultSopsFile = ../secrets/secrets.yaml;
+
+    secrets = {
+      "fumossh.key" = {
+        path = "${config.home.homeDirectory}/.ssh/fumossh.key";
+        mode = "0600";
+      };
+      "fumopgp.key" = {
+        mode = "0600";
+      };
+      abacusai_api_key = {
+        mode = "0600";
+      };
+    };
+
+    templates."shell-secrets.sh".content = ''
+      export ABACUSAI_API_KEY="${config.sops.placeholder.abacusai_api_key}"
+    '';
+  };
+  home.sessionVariables.SOPS_AGE_KEY_FILE = "/persist/sops/fumosops.key";
 
   home.packages = with pkgs; [
+    sops
+    age
+    ssh-to-age
     ptyxis
     resources
     fastfetch
@@ -68,6 +96,13 @@
     enable = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
+    initContent = ''
+      [ -f "${config.sops.templates."shell-secrets.sh".path}" ] && source "${config.sops.templates."shell-secrets.sh".path}"
+      if [ -f "${config.sops.secrets."fumopgp.key".path}" ] && ! gpg -K 35FAC098F119E8FA >/dev/null 2>&1; then
+        gpg --batch --import "${config.sops.secrets."fumopgp.key".path}" >/dev/null 2>&1
+        echo "5F3C25D755D3A4321D03FF7135FAC098F119E8FA:6:" | gpg --batch --import-ownertrust >/dev/null 2>&1
+      fi
+    '';
     oh-my-zsh = {
       enable = true;
       theme = "dpoggi";
@@ -101,7 +136,11 @@
             reasoning = true; # required to enable thinking controls
             thinking = {
               mode = "effort";
-              efforts = [ "low" "high" "max" ]; # ordered list of supported levels
+              efforts = [
+                "low"
+                "high"
+                "max"
+              ]; # ordered list of supported levels
               defaultLevel = "low";
             };
           }
@@ -111,14 +150,17 @@
             reasoning = true;
             thinking = {
               mode = "effort";
-              efforts = [ "low" "high" "max" ];
+              efforts = [
+                "low"
+                "high"
+                "max"
+              ];
               defaultLevel = "low";
             };
           }
         ];
       };
     };
-  home.sessionVariables.ABACUSAI_API_KEY = "s2_31a5a638ecafsdgasdgzdgdfgdzfgadrasdasdadasdaf1";
 
   # Brave Browser with privacy and utility extensions
   programs.brave = {
@@ -181,18 +223,21 @@
     };
   };
 
-  xdg.configFile."Thunar/uca.xml".text = ''
-    <?xml version="1.0" encoding="UTF-8" ?>
-    <actions>
-      <action>
-        <name>Open Terminal Here</name>
-        <command>ptyxis --new-window -d %f</command>
-        <description>Open Ptyxis in the current folder</description>
-        <patterns>*</patterns>
-        <directories/>
-      </action>
-    </actions>
-  '';
+  xdg.configFile."Thunar/uca.xml" = {
+    force = true;
+    text = ''
+      <?xml version="1.0" encoding="UTF-8" ?>
+      <actions>
+        <action>
+          <name>Open Terminal Here</name>
+          <command>ptyxis --new-window -d %f</command>
+          <description>Open Ptyxis in the current folder</description>
+          <patterns>*</patterns>
+          <directories/>
+        </action>
+      </actions>
+    '';
+  };
 
   # XDG MIME associations
   xdg.mimeApps = {

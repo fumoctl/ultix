@@ -10,6 +10,10 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     impermanence = {
       url = "github:nix-community/impermanence";
     };
@@ -54,6 +58,7 @@
       disko,
       chaotic,
       nix-flatpak,
+      sops-nix,
       ...
     }@inputs:
     let
@@ -68,6 +73,7 @@
             disko.nixosModules.disko
             home-manager.nixosModules.home-manager
             nix-flatpak.nixosModules.nix-flatpak
+            sops-nix.nixosModules.sops
             chaotic.nixosModules.nyx-cache
             chaotic.nixosModules.nyx-overlay
             chaotic.nixosModules.nyx-registry
@@ -82,6 +88,7 @@
             disko.nixosModules.disko
             home-manager.nixosModules.home-manager
             nix-flatpak.nixosModules.nix-flatpak
+            sops-nix.nixosModules.sops
             chaotic.nixosModules.nyx-cache
             chaotic.nixosModules.nyx-overlay
             chaotic.nixosModules.nyx-registry
