@@ -128,21 +128,20 @@
       providers.abacusai = {
         baseUrl = "https://routellm.abacus.ai/v1";
         api = "openai-completions";
-        apiKey = "ABACUSAI_API_KEY"; # env var name; falls back to the literal string
+        apiKey = "ABACUSAI_API_KEY";
         models = [
           {
             id = "deepseek-ai/DeepSeek-V4.1-Flash-1017";
             name = "DeepSeek-V4.1-Flash";
-            reasoning = true; # required to enable thinking controls
+            reasoning = true;
             thinking = {
               mode = "effort";
-              efforts = [
-                "low"
-                "high"
-                "max"
-              ]; # ordered list of supported levels
+              efforts = [ "low" "high" "max" ];
               defaultLevel = "low";
             };
+            input = [ "text" "image" ];
+            contextWindow = 1047576;
+            maxTokens = 360216;
           }
           {
             id = "moonshotai/Kimi-K3.1-Pro";
@@ -150,13 +149,12 @@
             reasoning = true;
             thinking = {
               mode = "effort";
-              efforts = [
-                "low"
-                "high"
-                "max"
-              ];
+              efforts = [ "low" "high" "max" ];
               defaultLevel = "low";
             };
+            input = [ "text" "image" ];
+            contextWindow = 1047576;
+            maxTokens = 130144;
           }
         ];
       };
